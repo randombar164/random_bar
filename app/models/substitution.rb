@@ -1,0 +1,2 @@
+class Substitution < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class BaseIngredient < ApplicationRecord
+end
