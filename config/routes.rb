@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       # define api endpoints
+      get 'concrete_drinks/:base_drink_id' => 'concrete_drinks#show'
     end
   end
 end
