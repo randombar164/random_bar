@@ -21,12 +21,13 @@ class BaseDrink < ApplicationRecord
       base_ingredient_ids.push concrete_ingredient[:base_ingredient_id].to_i
     end
     return true if self.base_ingredients.ids == base_ingredient_ids
+    return false if self.base_ingredients.ids.length != base_ingredient_ids.length
 
     self.base_ingredients.each_with_index do |base_ingredient, idx|
       if base_ingredient.id == base_ingredient_ids[idx]
         next
       end
-      return false if base_ingredient.substitutions.nil?
+      return false if base_ingredient.substitutions.ids.empty?
       return false unless base_ingredient.substitutions.ids.include?(base_ingredient_ids[idx])
       return false unless BaseIngredient.find(base_ingredient_ids[idx]).concrete_ingredients.ids.include?(concrete_ingredient_ids[idx])
     end
