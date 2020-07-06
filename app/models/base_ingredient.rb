@@ -9,5 +9,9 @@ class BaseIngredient < ApplicationRecord
                                    foreign_key: "substituted_id",
                                    dependent:   :destroy
   has_many :substitutings, through: :active_relationships, source: :substituted
-  has_many :substitutions, through: :passive_relationships, source: :substituting 
+  has_many :substitutions, through: :passive_relationships, source: :substituting
+
+  def find_random_concrete_ingredient
+    self.concrete_ingredients[rand(self.concrete_ingredients.count)]
+  end
 end
