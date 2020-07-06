@@ -5,7 +5,7 @@ class BaseDrink < ApplicationRecord
   has_many :base_ingredients, through: :base_drinks_base_ingredients
 
 
-  def validate_params(concrete_ingredients_to_parse)
+  def params_valid?(concrete_ingredients_to_parse)
     return false if concrete_ingredients_to_parse.blank?
     concrete_ingredients = concrete_ingredients_to_parse.values
     return false if self.base_ingredients.count != concrete_ingredients.length
