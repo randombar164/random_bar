@@ -1,17 +1,38 @@
 class Api::V1::ConcreteDrinksController < Api::V1::BaseController
 
   def index
-    base_drink_id = get_base_drink_id
-    base_drink = BaseDrink.includes(:drink_method, :glass_type, { base_drinks_base_ingredients: [:base_ingredient, :unit] } ).find_by(id: base_drink_id)
-    concrete_ingredients = params_valid?(base_drink) ? \
-      base_drink.get_concrete_ingredients_from_params(params[:concrete_ingredients]) : base_drink.get_random_concrete_ingredients
+    if !params_filters_valid?
+      params.delete :filters
+    end
+    if params[:filters].present?
+      p "------------------------------------------------------------------------------------"
+      base_drink = BaseDrink.find_by_filters params[:filters]
+      if base_drink.nil?
+        response_not_found("base_drink")
+      else
+        concrete_ingredients = base_drink.get_random_concrete_ingredients params[:filters][:handling_store_ids].values.map(&:to_i)
+        concrete_drink = ConcreteDrink.new(base_drink: base_drink, concrete_ingredients: concrete_ingredients)
+        render json: {concrete_drink: concrete_drink.to_json}
+      end
+    else
+      base_drink_id = get_base_drink_id
+      base_drink = BaseDrink.includes(:drink_method, :glass_type, { base_drinks_base_ingredients: [:base_ingredient, :unit] } ).find_by(id: base_drink_id)
+      concrete_ingredients = params_valid?(base_drink) ? \
+        base_drink.get_concrete_ingredients_from_params(params[:concrete_ingredients]) : base_drink.get_random_concrete_ingredients
 
-    concrete_drink = ConcreteDrink.new(base_drink: base_drink, concrete_ingredients: concrete_ingredients)
-    render json: {concrete_drink: concrete_drink.to_json}
+      concrete_drink = ConcreteDrink.new(base_drink: base_drink, concrete_ingredients: concrete_ingredients)
+      render json: {concrete_drink: concrete_drink.to_json}
+    end
   end
 
 
   private
+
+  def params_filters_valid?
+    return true if params[:filters].nil?
+    return false if !!!params[:filters][:base_ingredient_ids]&.values&.any? && !!!params[:filters][:handling_store_ids]&.values&.any?
+    return true
+  end
 
   def get_base_drink_id
     check_params_base_drink_id
@@ -19,7 +40,7 @@ class Api::V1::ConcreteDrinksController < Api::V1::BaseController
   end
 
   def check_params_base_drink_id
-    if params[:base_drink_id].blank? || params[:base_drink_id]&.to_i > BaseDrink.count
+    if params[:base_drink_id].blank? || ![*1..BaseDrink.count].include?(params[:base_drink_id]&.to_i)
       params.delete(:concrete_ingredients)
       params.delete(:base_drink_id)
     end
