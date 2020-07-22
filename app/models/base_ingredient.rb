@@ -14,4 +14,16 @@ class BaseIngredient < ApplicationRecord
   def find_random_concrete_ingredient
     self.concrete_ingredients[rand(self.concrete_ingredients.count)]
   end
+
+  def handling_store_ids_without_unavailable
+    handling_stores_count = HandlingStore.count
+    ingredients = Array(self.concrete_ingredients)
+    self.substitutions.each do |substitution|
+      ingredients.concat(Array(substitution.concrete_ingredients))
+    end
+    handling_store_ids = ingredients.each_with_object([]) do |ingredient, handling_store_ids|
+      handling_store_ids.concat(Array(ingredient&.handling_store_ids)).uniq!
+      return handling_store_ids - [4] if (handling_store_ids - [4]).length == (handling_stores_count - 1)
+    end
+  end
 end
