@@ -25,5 +25,13 @@ class BaseIngredient < ApplicationRecord
       handling_store_ids.concat(Array(ingredient&.handling_store_ids)).uniq!
       return handling_store_ids - [4] if (handling_store_ids - [4]).length == (handling_stores_count - 1)
     end
+    return handling_store_ids
+  end
+
+  def check_handling_store_ids handling_store_ids
+    self.concrete_ingredients.each do |ci|
+      return true if (handling_store_ids - ci.handling_store_ids).length != handling_store_ids.length
+    end
+    return false
   end
 end
