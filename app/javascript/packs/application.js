@@ -22,7 +22,7 @@ import vuetify from '../plugins/vuetify'
 // import store from 'store';
 import router from '../routes';
 import App from '../app';
-import store from './store/index';
+import store from '../store/store';
 
 
 // import '../assets/css/application';
