@@ -5,39 +5,28 @@
     </div>
     <div class="my-5 mr-4">
       <p class="ingName">{{ name }}</p>
-      <p class="ingTotal">{{ cockNum }}種類</p>
+      <p class="ingTotal">カクテル{{ count }}種類</p>
       <ing-slot-btn :gacha="toGacha" class="ingBtn" ></ing-slot-btn>
     </div>
   </v-card>
 </template>
 <script>
 import IngSlotBtn from "packs/atoms/IngSlotBtn";
-import { mapState, mapActions } from 'vuex';
 
 export default{
   props:[
     "id",
     "name",
+    "count"
   ],
   components:{
     IngSlotBtn
   },
-  computed: {
-    ...mapState('drinkData',[
-      'cockNum'
-    ])
-  },
   methods:{
-    ...mapActions('drinkData',[
-      'countCocktail'
-    ]),
     toGacha(){
-      this.$router.push({ path:`/ingredient_gacha/${this.id}`, query: {IngName: this.name}});
+      this.$router.push({ path:`/ingredient_gacha/${this.id}`, query: {IngName: this.name, IngId: this.id}});
       window.scrollTo(0,0);
     }
-  },
-  created(){
-    this.countCocktail(this.id);
   }
 }
 </script>

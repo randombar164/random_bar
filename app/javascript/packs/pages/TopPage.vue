@@ -20,29 +20,29 @@ export default{
   computed: {
     ...mapState('drinkData',[
       'cocktailRecipe',
-      'drinkId',
+      'drinkId'
     ])
   },
   methods: {
     ...mapActions('drinkData',[
       'getDrink',
-      'foundId',
       'setRecipe',
       'removeRecipe',
-      'toResult'
     ]),
-    RandomGacha(){
+    async RandomGacha(){
       this.removeRecipe();
-      this.getDrink({
+      await this.getDrink({
         filters:{
-          handling_store_ids: [1],
-          base_ingredient_ids:[1]
+          handling_store_ids: [1, 2, 3],
         }
       });
-      console.log(this.cocktailRecipe)
-      this.foundId();
       this.setRecipe();
       this.$router.push({ path:`/result/${this.drinkId}`});
+      console.log("now");
+      window.scrollTo(0,0);
+      console.log("ddd");
+      console.log(this.cocktailRecipe);
+      console.log(this.drinkId);
     }
   }
 };

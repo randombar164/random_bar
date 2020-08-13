@@ -5,7 +5,7 @@
         10000種類のカクテルから</p>
     </div>
     <div class="d-flex justify-center">
-        <slot-btn class="gachaBtn" :gacha="gacha"></slot-btn>
+        <slot-btn class="gachaBtn" :gacha="gacha" :msg="btnMsg" :width="width"></slot-btn>
     </div>
   </div>
 </template>
@@ -15,6 +15,12 @@ export default{
   props:[
     "gacha"
   ],
+  data(){
+    return{
+      btnMsg: "ガチャる",
+      width: "172px"
+    }
+  },
   components:{
     SlotBtn
   }

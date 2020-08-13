@@ -4,7 +4,7 @@
       <v-col cols="12" class="IngPageWrapper">
         <p class="cockName"><span>{{ name }}</span>を使ったカクテルガチャ</p>
         <question-circle></question-circle><br />
-        <slot-btn class="ing-slot-btn" :gacha="IngredientGacha"></slot-btn>
+        <slot-btn class="ing-slot-btn" :gacha="IngredientGacha" :msg="btnMsg" :width="width"></slot-btn>
       </v-col>
       <v-col cols="12">
         <ingredients-list></ingredients-list>
@@ -16,7 +16,7 @@
 import QuestionCircle from "packs/atoms/QuestionCircle";
 import SlotBtn from "packs/atoms/SlotBtn";
 import IngredientsList from "packs/organisms/IngredientsList";
-import { mapActions } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default{
   components:{
@@ -27,7 +27,9 @@ export default{
   data: function(){
     return{
       id: null,
-      name: null
+      name: null,
+      btnMsg: "まわす",
+      width: "333px"
     }
   },
   created(){
@@ -40,22 +42,27 @@ export default{
       this.name = to.query.IngName
     }
   },
+  computed: {
+    ...mapState([
+      'drinkId'
+    ])
+  },
   methods:{
     ...mapActions('drinkData',[
       'getDrink',
-      'toResult',
       'removeRecipe',
       'setRecipe'
     ]),
-    IngredientGacha(){
+    async IngredientGacha(){
       this.removeRecipe();
-      this.getDrink({
+      await this.getDrink({
         filters:{
-          base_ingredient_ids:[this.id]
+          base_ingredient_ids:[ Number(this.id) ]
         }
       });
       this.setRecipe();
-      this.$router.push({ path:`/result/${this.id}`, query: {IngName: this.name}});
+      this.$router.push({ path:`/result/${this.drinkId}`, query: {IngName: this.name, IngId: this.id}});
+      window.scrollTo(0,0);
     }
   }
 }

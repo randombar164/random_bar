@@ -14,6 +14,7 @@
 </template>
 <script>
 import AmazonBtn from "packs/atoms/AmazonBtn";
+
 export default{
   props:[
     "toAmazon",

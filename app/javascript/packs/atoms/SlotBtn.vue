@@ -1,11 +1,13 @@
 <template>
-  <v-btn v-on:click="gacha" id="ingBtn" height="57">ガチャる</v-btn>
+  <v-btn v-on:click="gacha" id="ingBtn" height="57" width="width">{{ msg }}</v-btn>
 </template>
 <script>
 export default{
   props: [
-    "gacha"
-  ],
+    "gacha",
+    "msg",
+    "width"
+  ]
 }
 </script>
 <style scoped>
