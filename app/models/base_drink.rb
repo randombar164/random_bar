@@ -1,4 +1,5 @@
 class BaseDrink < ApplicationRecord
+  validates :name, uniqueness: { scope: :strength }
   belongs_to :drink_method
   belongs_to :glass_type
   has_many :base_drinks_base_ingredients
