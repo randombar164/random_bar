@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import HeaderComponent from './packs/components/header';
-import FooterComponent from './packs/components/footer';
+import HeaderComponent from './packs/organisms/header';
+import FooterComponent from './packs/organisms/footer';
 
 export default {
   components: {
@@ -29,5 +29,8 @@ export default {
 <style>
 .marginTop9 {
   margin-top: 90px
+}
+#app{
+  background-color: #FCFAF1;
 }
 </style>
