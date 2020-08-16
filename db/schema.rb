@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 2020_07_02_040233) do
   create_table "concrete_ingredients", force: :cascade do |t|
     t.bigint "base_ingredient_id"
     t.string "name"
-    t.string "url"
+    t.text "tag"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["base_ingredient_id"], name: "index_concrete_ingredients_on_base_ingredient_id"
