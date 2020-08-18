@@ -15,6 +15,7 @@ export default {
   methods:{
     toTop(){
       this.$router.push({ path:`/`});
+      window.scrollTo(0,0);
     }
   }
 }

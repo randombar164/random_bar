@@ -24,7 +24,6 @@ export const drinkData = {
   },
   actions: {
     async getDrink({ commit }, searchParams){
-      console.log("a");
       let recipe = {
         "id":null,
         "name":null,
@@ -36,11 +35,9 @@ export const drinkData = {
       await axios
       .get("/api/v1/concrete_drinks", {params: searchParams, paramsSerializer})
       .then(res => {
+        console.log(res);
         baseDrink = res.data.concrete_drink.base_drink;
         concreteIng = res.data.concrete_drink.concrete_ingredients;
-        console.log(baseDrink);
-        console.log(concreteIng);
-        console.log(res);
         recipe.id = baseDrink.id;
         recipe.name = baseDrink.name;
         baseDrink.base_drinks_base_ingredients.map((val, index)=>{
@@ -51,10 +48,9 @@ export const drinkData = {
             "unit":val.unit.name,
             "concreteIngredientId":concreteIng[index].id,
             "name":concreteIng[index].name,
-            "url":"#",
+            "tag":concreteIng[index].tag,
           })
         })
-        console.log("b");
         commit('addCocktail', {cocktailRecipe: recipe});
         commit('addDrinkId', {id: baseDrink.id});
       })
@@ -74,22 +70,18 @@ export const drinkData = {
     //   })
     //   commit('addCockNum', {count: count});
     //   },
-      // foundId({ commit, state }){
-      //   commit('addDrinkId', state.cocktailRecipe.id);
-      // },
-      setRecipe({ state }){
-          console.log(state.cocktailRecipe);
-          localStorage.setItem('cocktailRecipe', JSON.stringify(state.cocktailRecipe));
-      },
-      getRecipe({state, commit }){
-        console.log(localStorage.getItem('cocktailRecipe'));
-        commit('addCocktail', {cocktailRecipe: JSON.parse(localStorage.getItem('cocktailRecipe'))});
-        commit('addDrinkId', { id: state.cocktailRecipe.id});
-        console.log(state.cocktailRecipe);
-        console.log(state.drinkId);
-      },
-      removeRecipe(){
-          localStorage.removeItem('cocktailRecipe');
-      }
-    }
+    // foundId({ commit, state }){
+    //   commit('addDrinkId', state.cocktailRecipe.id);
+    // },
+    setRecipe({ state }){
+      localStorage.setItem('cocktailRecipe', JSON.stringify(state.cocktailRecipe));
+    },
+    getRecipe({state, commit }){
+      commit('addCocktail', {cocktailRecipe: JSON.parse(localStorage.getItem('cocktailRecipe'))});
+      commit('addDrinkId', { id: state.cocktailRecipe.id});
+    },
+    removeRecipe(){
+      localStorage.removeItem('cocktailRecipe');
+    },
   }
+}

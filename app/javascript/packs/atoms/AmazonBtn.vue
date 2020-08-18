@@ -1,10 +1,14 @@
 <template>
-  <v-btn outlined color="#FF6749" @click="toAmazon" class="amazonBtn" width="116px" height="34px">Amazonで購入</v-btn>
+  <a :href="amazonUrl">
+    <v-btn  class="amazonBtn">
+      Amazonで購入
+    </v-btn>
+  </a>
 </template>
 <script>
 export default{
   props:[
-    "toAmazon"
+    "amazonUrl"
   ]
 }
 </script>
@@ -16,5 +20,9 @@ export default{
   font-weight: normal;
   font-size: 12px;
   line-height: 14px;
+  width: 116px;
+  height: 34px;
+  border: 2px solid #FF6749;
+  color: #FF6749;
 }
 </style>
