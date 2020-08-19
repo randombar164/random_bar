@@ -35,8 +35,6 @@ export default{
     const regexp_url = /((h?)(ttps?:\/\/[a-zA-Z0-9.\-_@:/~?%&;=+#',()*!]+))/g; // ']))/;
     this.amazonUrl = this.amazonTag.match(regexp_url)[0];
     this.imageUrl = this.amazonTag.match(regexp_url)[1];
-    // console.log(this.amazonUrl);
-    console.log(this.amazonTag.match(regexp_url));
   }
 }
 </script>

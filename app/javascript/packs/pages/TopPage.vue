@@ -40,11 +40,7 @@ export default{
       });
       this.setRecipe();
       this.$router.push({ path:`/result/${this.drinkId}`});
-      console.log("now");
       window.scrollTo(0,0);
-      console.log("ddd");
-      console.log(this.cocktailRecipe);
-      console.log(this.drinkId);
     }
   }
 };

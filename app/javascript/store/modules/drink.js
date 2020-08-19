@@ -35,7 +35,6 @@ export const drinkData = {
       await axios
       .get("/api/v1/concrete_drinks", {params: searchParams, paramsSerializer})
       .then(res => {
-        console.log(res);
         baseDrink = res.data.concrete_drink.base_drink;
         concreteIng = res.data.concrete_drink.concrete_ingredients;
         recipe.id = baseDrink.id;
