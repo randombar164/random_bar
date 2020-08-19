@@ -29,6 +29,7 @@ export const drinkData = {
         "name":null,
         "ingredients":[]
       };
+      const regexp_url = /((h?)(ttps?:\/\/[a-zA-Z0-9.\-_@:/~?%&;=+#',()*!]+))/g; // ']))/;
       let concreteIng = null;
       let baseDrink = null;
       const paramsSerializer = (params) => qs.stringify(params);
@@ -47,7 +48,8 @@ export const drinkData = {
             "unit":val.unit.name,
             "concreteIngredientId":concreteIng[index].id,
             "name":concreteIng[index].name,
-            "tag":concreteIng[index].tag,
+            "amazonUrl":concreteIng[index].tag.match(regexp_url)[0],
+            "imageUrl":concreteIng[index].tag.match(regexp_url)[1]
           })
         })
         commit('addCocktail', {cocktailRecipe: recipe});
