@@ -1,8 +1,10 @@
 <template>
   <div>
     <top-img :gacha="RandomGacha"></top-img>
-    <top-exp></top-exp>
-    <ingredients-list>a</ingredients-list>
+    <v-container>
+      <top-exp></top-exp>
+      <ingredients-list>a</ingredients-list>
+    </v-container>
   </div>
 </template>
 <script>
@@ -33,7 +35,7 @@ export default{
       this.removeRecipe();
       await this.getDrink({
         filters:{
-          handling_store_ids: [1, 2, 3],
+          handling_store_ids: [1],
         }
       });
       this.setRecipe();

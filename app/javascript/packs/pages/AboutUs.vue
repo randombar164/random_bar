@@ -1,8 +1,13 @@
 <template>
   <v-container>
     <v-row>
-      <p class="mainTitle ml-4">このサイトについて</p>
+      <p class="mainTitle mt-5 ml-4">このサイトについて</p>
     </v-row>
+    <v-col cols="12">
+      <p>
+        お家Barは今の気分に合ったカクテルを材料から見つけられるアプリです。見つかるカクテルの材料は全てコンビニで揃えられるので、お酒を飲みたいと思ったらコンビニに行くだけで作ることが出来ます。あなたは今、どんなお酒を飲みたいですか？
+      </p>
+    </v-col>
     <v-col cols="12">
       <p class="subTitle mb-3">利用規約</p>
       <terms-of-service class="terms"></terms-of-service>

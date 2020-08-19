@@ -25,4 +25,7 @@ export default{
   border: 2px solid #FF6749;
   color: #FF6749;
 }
+a {
+  text-decoration: none;
+}
 </style>
