@@ -5,7 +5,7 @@
         <p class="gachaWith">{{ recommendedIngredient.category }}からガチャる</p>
       </v-col>
       <v-col cols="12" v-for="ings in recommendedIngredient.ingredients" :key=ings.id>
-        <slot-ingredient-card :id="ings.id" :name="ings.name" :count="ings.count"></slot-ingredient-card>
+        <slot-ingredient-card :id="ings.id" :name="ings.name" :count="ings.count" :amazonImage="ings.amazonImage"></slot-ingredient-card>
       </v-col>
     </v-row>
   </v-container>

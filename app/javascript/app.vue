@@ -9,6 +9,7 @@
               <router-view />
           <!-- </v-container> -->
       </v-content>
+      <amazon-osusume />
       <footer-component />
     </div>
   </v-app>
@@ -17,11 +18,13 @@
 <script>
 import HeaderComponent from './packs/organisms/header';
 import FooterComponent from './packs/organisms/footer';
+import AmazonOsusume from './packs/molecules/AmazonOsusume';
 
 export default {
   components: {
     HeaderComponent,
     FooterComponent,
+    AmazonOsusume
   }
 }
 </script>

@@ -1,0 +1,22 @@
+{
+  "option": [
+    {
+      "id":1,
+      "name": "ボルス メロン",
+      "amazonUrl": "https://www.amazon.co.jp/%E3%83%9C%E3%83%AB%E3%82%B9-4-BO-024-17-%E3%83%A1%E3%83%AD%E3%83%B3-700ml/dp/B001TO5H4K/ref=as_li_ss_il?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&dchild=1&keywords=%E3%83%A1%E3%83%AD%E3%83%B3%E3%83%BB%E3%83%AA%E3%82%AD%E3%83%A5%E3%83%BC%E3%83%AB&qid=1593411657&sr=8-1-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUFLVDEyVTZGMVJCRTYmZW5jcnlwdGVkSWQ9QTA1NzY3OTkxVDJVOVQ1U0Q0NlhHJmVuY3J5cHRlZEFkSWQ9QTJFWDdSRTVCS01NUE0md2lkZ2V0TmFtZT1zcF9hdGYmYWN0aW9uPWNsaWNrUmVkaXJlY3QmZG9Ob3RMb2dDbGljaz10cnVl&linkCode=li2&tag=c6tower-22&linkId=321e8e250b37b533ccc26f354de04907&language=ja_JP",
+      "amazonImage": "https://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B001TO5H4K&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=c6tower-22&language=ja_JP"
+    },
+    {
+      "id":2,
+      "name": "カンパリ",
+      "amazonUrl": "https://www.amazon.co.jp/%E3%82%AB%E3%83%B3%E3%83%91%E3%83%AA-CAMP10-CAMPARI-%E7%93%B6-1000ml/dp/B0029ZCLOC/ref=as_li_ss_il?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&dchild=1&keywords=%E3%83%8F%E3%83%BC%E3%83%96%E3%83%BB%E3%83%AA%E3%82%AD%E3%83%A5%E3%83%BC%E3%83%AB&qid=1593413913&sr=8-3-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEyRUgzNzVQRjczUDhJJmVuY3J5cHRlZElkPUExMDQwMTExSlo3NFZNUUVVVlJBJmVuY3J5cHRlZEFkSWQ9QTJBN0g2TlBRR0k1T0Emd2lkZ2V0TmFtZT1zcF9hdGYmYWN0aW9uPWNsaWNrUmVkaXJlY3QmZG9Ob3RMb2dDbGljaz10cnVl&linkCode=li2&tag=c6tower-22&linkId=9ae4d7f296feeb98b9411bfb80d61807&language=ja_JP",
+      "amazonImage": "https://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B0029ZCLOC&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=c6tower-22&language=ja_JP"
+    },
+    {
+      "id":3,
+      "name": "ディサローノ アマレット",
+      "amazonUrl": "https://www.amazon.co.jp/Disaronno-%E3%83%87%E3%82%A3%E3%82%B5%E3%83%AD%E3%83%BC%E3%83%8E-3-AM-003-28-%E3%82%A2%E3%83%9E%E3%83%AC%E3%83%83%E3%83%88-700ml/dp/B001TZ5KRI/ref=as_li_ss_il?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&dchild=1&keywords=%E3%82%A2%E3%83%BC%E3%83%A2%E3%83%B3%E3%83%89%E3%83%BB%E3%83%AA%E3%82%AD%E3%83%A5%E3%83%BC%E3%83%AB&qid=1593444667&sr=8-3&linkCode=li2&tag=c6tower-22&linkId=dae8ab4b4f15f5e1d25a9d9d29908272&language=ja_JP",
+      "amazonImage": "https://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B001TZ5KRI&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=c6tower-22&language=ja_JP"
+    }
+  ]
+}
