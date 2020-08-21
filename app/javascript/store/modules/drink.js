@@ -6,6 +6,8 @@ export const drinkData = {
   state: {
     cocktailRecipe: null,
     drinkId: null,
+    amazonUrl: null,
+    amazonImage: null
     // cockNum: null
   },
   getters: {
@@ -18,6 +20,12 @@ export const drinkData = {
     addDrinkId(state, payload){
       state.drinkId = payload.id;
     },
+    addAmazonUrl(state, payload){
+      state.amazonUrl = payload.amazonUrl;
+    },
+    addAmazonImage(state, payload){
+      state.amazonImage = payload.amazonImage;
+    }
     // addCockNum(state, payload){
     //   state.cockNum = payload.count;
     // },
@@ -59,21 +67,6 @@ export const drinkData = {
         console.error(err);
       })
     },
-    // countCocktail({ commit }, base_drink_id){
-    //   let count;
-    //   axios.get(` /api/v1/base_ingredients/${base_drink_id}/base_drinks_count`)
-    //   .then(res => {
-    //     count = res.data.base_drinks_count;
-    //     console.log(res);
-    //   })
-    //   .catch(err => {
-    //     console.error(err);
-    //   })
-    //   commit('addCockNum', {count: count});
-    //   },
-    // foundId({ commit, state }){
-    //   commit('addDrinkId', state.cocktailRecipe.id);
-    // },
     setRecipe({ state }){
       localStorage.setItem('cocktailRecipe', JSON.stringify(state.cocktailRecipe));
     },
