@@ -35,3 +35,5 @@ WORKDIR $APP_HOME
 ADD . $APP_HOME
 
 #RUN yarn install
+
+EXPOSE 3000
