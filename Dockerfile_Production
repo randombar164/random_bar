@@ -15,7 +15,7 @@ RUN apt-get install -y curl apt-transport-https wget && \
     apt-get update && apt-get install -y yarn
 
 # nodejs環境の構築
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - && \
     apt-get install nodejs
 
 # Cannot find module node-sass対策
