@@ -1,5 +1,5 @@
 build:
   docker:
-    web: Dockerfile
+    web: Dockerfile_Production
 run:
   web: bundle exec rails s -b 0.0.0.0 -p $PORT
