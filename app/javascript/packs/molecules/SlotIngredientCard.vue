@@ -1,7 +1,7 @@
 <template>
   <v-card flat height="161px" id="ingCard">
     <div class="float-left my-5 mx-4">
-      <v-img src="http://placekitten.com/200/300" height="117px" width="112px"></v-img>
+      <v-img :src="amazonImage" height="117px"contain  width="112px"></v-img>
     </div>
     <div class="my-5 mr-4">
       <p class="ingName">{{ name }}</p>
@@ -17,7 +17,8 @@ export default{
   props:[
     "id",
     "name",
-    "count"
+    "count",
+    "amazonImage"
   ],
   components:{
     IngSlotBtn
@@ -33,6 +34,7 @@ export default{
 <style scoped>
 #ingCard{
   border: 1px solid #C4C4C4;
+  width: 100%;
 }
 .ingBtn{
   width: 50%;

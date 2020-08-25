@@ -17,24 +17,14 @@ import AmazonBtn from "packs/atoms/AmazonBtn";
 
 export default{
   props:[
-    "amazonTag",
+    "amazonUrl",
+    "imageUrl",
     "name",
     "unit",
     "amount"
   ],
-  data(){
-    return{
-      amazonUrl: null,
-      imageUrl: null
-    }
-  },
   components:{
     AmazonBtn
-  },
-  created(){
-    const regexp_url = /((h?)(ttps?:\/\/[a-zA-Z0-9.\-_@:/~?%&;=+#',()*!]+))/g; // ']))/;
-    this.amazonUrl = this.amazonTag.match(regexp_url)[0];
-    this.imageUrl = this.amazonTag.match(regexp_url)[1];
   }
 }
 </script>

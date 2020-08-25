@@ -5,11 +5,13 @@
       <top-exp></top-exp>
       <ingredients-list>a</ingredients-list>
     </v-container>
+    <amazon-osusume />
   </div>
 </template>
 <script>
 import TopExp from "packs/molecules/TopExp";
 import TopImg from "packs/molecules/TopImg";
+import AmazonOsusume from 'packs/molecules/AmazonOsusume';
 import IngredientsList from "packs/organisms/IngredientsList";
 import { mapState, mapActions } from 'vuex'
 
@@ -17,7 +19,8 @@ export default{
   components:{
     TopExp,
     TopImg,
-    IngredientsList
+    IngredientsList,
+    AmazonOsusume
   },
   computed: {
     ...mapState('drinkData',[

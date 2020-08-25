@@ -21,7 +21,7 @@ import FooterComponent from './packs/organisms/footer';
 export default {
   components: {
     HeaderComponent,
-    FooterComponent,
+    FooterComponent
   }
 }
 </script>
