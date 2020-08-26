@@ -31,7 +31,7 @@ import store from '../store/store';
 Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(VueAnalytics, {
-  id: process.env.ANALYTICS_ID,
+  id: 'UA-176415991-1',
   router
 })
 
