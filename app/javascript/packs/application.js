@@ -18,6 +18,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VueRouter from 'vue-router';
+import VueAnalytics from 'vue-analytics'
 import vuetify from '../plugins/vuetify'
 // import store from 'store';
 import router from '../routes';
@@ -29,6 +30,10 @@ import store from '../store/store';
 
 Vue.use(Vuex);
 Vue.use(VueRouter);
+Vue.use(VueAnalytics, {
+  id: 'UA-176415991-1',
+  router
+})
 
 document.addEventListener('DOMContentLoaded', () => {
   new Vue({
