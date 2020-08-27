@@ -31,7 +31,8 @@ import store from '../store/store';
 Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(VueAnalytics, {
-  id: 'UA-176415991-1'
+  id: 'UA-176415991-1',
+  router
 });
 
 document.addEventListener('DOMContentLoaded', () => {
