@@ -31,10 +31,7 @@ import store from '../store/store';
 Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(VueAnalytics, {
-  id: 'UA-176415991-1',
-  debug: {
-    sendHitTask: process.env.NODE_ENV === 'production'
-  }
+  id: 'UA-176415991-1'
 })
 
 document.addEventListener('DOMContentLoaded', () => {
