@@ -31,8 +31,10 @@ import store from '../store/store';
 Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(VueAnalytics, {
-  id: process.env.TRACKING_ID,
-  router
+  id: 'UA-176415991-1',
+  debug: {
+    sendHitTask: process.env.NODE_ENV === 'production'
+  }
 })
 
 document.addEventListener('DOMContentLoaded', () => {
