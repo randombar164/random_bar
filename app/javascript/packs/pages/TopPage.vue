@@ -42,7 +42,6 @@ export default{
         }
       });
       this.setRecipe();
-      console.log(process.env)
       this.$router.push({ path:`/result/${this.drinkId}`});
       window.scrollTo(0,0);
     }
