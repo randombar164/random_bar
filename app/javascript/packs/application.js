@@ -32,7 +32,7 @@ Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(VueAnalytics, {
   id: 'UA-176415991-1'
-})
+});
 
 document.addEventListener('DOMContentLoaded', () => {
   new Vue({
