@@ -4,12 +4,6 @@ const vue = require('./loaders/vue')
 const webpack = require('webpack')
 const dotenv = require('dotenv')
 
-environment.plugins.prepend('Environment',
-  new webpack.EnvironmentPlugin(
-    JSON.parse(JSON.stringify(process.env))
-  )
-)
-
 environment.plugins.prepend('VueLoaderPlugin', new VueLoaderPlugin())
 environment.loaders.prepend('vue', vue)
 module.exports = environment
