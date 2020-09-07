@@ -145,4 +145,20 @@ class BaseDrink < ApplicationRecord
     end
   end
 
+  # base_drinks カウント用
+  def self.base_drinks_from_base_ingredients(ids)
+    base_drinks = []
+    BaseDrink.all.includes(:base_drinks_base_ingredients).each do |base_drink|
+      base_drinks.push(base_drink) if base_drink.check_enough_ingredients?(ids)
+    end
+    return base_drinks
+  end
+
+  def check_enough_ingredients?(ids)
+    self.base_drinks_base_ingredients.each do |base_drinks_base_ingredient|
+      return false unless ids.include?(base_drinks_base_ingredient.base_ingredient_id)
+    end
+    return true
+  end
+
 end
