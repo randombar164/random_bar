@@ -10,7 +10,7 @@ export default{
 </script>
 <style scoped>
 #slotBtn{
-  /* background-color: #FF6749; */
+  background-color: #FCFAF1;
   border-radius: 6px;
   font-family: Roboto;
   font-style: normal;
