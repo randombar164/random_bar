@@ -38,26 +38,28 @@ export const drinkData = {
         "ingredients":[]
       };
       const regexp_url = /((h?)(ttps?:\/\/[a-zA-Z0-9.\-_@:/~?%&;=+#',()*!]+))/g; // ']))/;
-      let concreteIng = null;
-      let baseDrink = null;
       const paramsSerializer = (params) => qs.stringify(params);
+      console.log(paramsSerializer(searchParams));
       await axios
       .get("/api/v1/concrete_drinks", {params: searchParams, paramsSerializer})
       .then(res => {
-        baseDrink = res.data.concrete_drink.base_drink;
-        concreteIng = res.data.concrete_drink.concrete_ingredients;
+        console.log(res);
+        const baseDrink = res.data.concrete_drink.base_drink;
         recipe.id = baseDrink.id;
         recipe.name = baseDrink.name;
         baseDrink.base_drinks_base_ingredients.map((val, index)=>{
+          const concreteIng = res.data.concrete_drink.concrete_ingredients.filter(v => v.base_ingredient_id == val.base_ingredient.id)[0];
+          console.log(concreteIng);
           recipe.ingredients.push({
-            "id":val.id,
-            "baseIngredientId":val.base_ingredient_id,
-            "amount":val.amount,
-            "unit":val.unit.name,
-            "concreteIngredientId":concreteIng[index].id,
-            "name":concreteIng[index].name,
-            "amazonUrl":concreteIng[index].tag.match(regexp_url)[0],
-            "imageUrl":concreteIng[index].tag.match(regexp_url)[1]
+            "id": val.id,
+            "baseIngredientId": val.base_ingredient_id,
+            "baseIngredientName": val.base_ingredient.name,
+            "additionalExp": val.additional_explanation || null,
+            "amount": val.unit.unit_conversion? String(Number(val.unit.unit_conversion.amount)*Number(val.amount)) : val.amount,
+            "concreteIngredientId": concreteIng.id,
+            "name": concreteIng.name,
+            "amazonUrl": concreteIng.tag.match(regexp_url)[0],
+            "imageUrl": concreteIng.tag.match(regexp_url)[1]
           })
         })
         commit('addCocktail', {cocktailRecipe: recipe});
