@@ -4,8 +4,10 @@
       <v-img :src="imageUrl" width="112px" height="117px" contain class="IngImg"></v-img>
     </div>
     <div class="mr-4 mt-3">
-      <p class="howMany">{{ amount }}{{ unit }}</p>
+      <p class="supportInfo">{{ amount }}ml</p>
       <p class="resultIngName">{{ name }}</p>
+      <p class="supportInfo">{{ baseIngName }}</p>
+      <p class="supportInfo">{{ additionalExp }}</p>
       <amazon-btn :amazonUrl="amazonUrl"></amazon-btn>
     </div>
   </v-card>
@@ -21,7 +23,9 @@ export default{
     "imageUrl",
     "name",
     "unit",
-    "amount"
+    "amount",
+    "baseIngName",
+    "additionalExp"
   ],
   components:{
     AmazonBtn
@@ -34,18 +38,18 @@ export default{
   width: 100%;
   margin-top: 15px;
 }
-.howMany{
+.supportInfo{
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
-  font-size: 15px;
-  line-height: 18px;
+  font-size: 12px;
+  line-height: 12px;
 }
 .resultIngName{
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
   font-size: 20px;
-  line-height: 23px;
+  line-height: 21px;
 }
 </style>
