@@ -1,13 +1,17 @@
 class BaseDrink < ApplicationRecord
   validates :name, uniqueness: { scope: :strength }
+
   belongs_to :drink_method
   belongs_to :glass_type
   has_many :base_drinks_base_ingredients
   has_many :base_ingredients, through: :base_drinks_base_ingredients
 
+  scope :with_recipe, -> { includes(:drink_method, :glass_type, { base_drinks_base_ingredients: [:base_ingredient, { unit: [:unit_conversion] } ] } ) }
+  scope :random,      -> { where( 'id >= ?', rand(BaseDrink.first.id..BaseDrink.last.id) ).first }
+
   def self.find_by_params params
     params_base_drink_id_valid?(params) ? \
-      BaseDrink.includes(:drink_method, :glass_type, { base_drinks_base_ingredients: [:base_ingredient, :unit] } ).find(params[:base_drink_id]) : \
+      BaseDrink.with_recipe.find(params[:base_drink_id]) : \
       BaseDrink.get_random(params[:filters])
   end
 
@@ -23,7 +27,7 @@ class BaseDrink < ApplicationRecord
   end
 
   def self.get_random params_filters
-    return BaseDrink.includes(:drink_method, :glass_type, { base_drinks_base_ingredients: [:base_ingredient, :unit] } ).find(rand(1..BaseDrink.count)) if params_filters.nil?
+    return BaseDrink.with_recipe.random if params_filters.nil?
 
     params_base_ingredient_ids = Array(params_filters[:base_ingredient_ids]&.values&.map(&:to_i))
     params_handling_store_ids = params_filters[:handling_store_ids]&.values&.map(&:to_i) || [1,2,3]
@@ -39,7 +43,7 @@ class BaseDrink < ApplicationRecord
 
     cookable_base_drink_ids.shuffle!
     cookable_base_drink_ids.each do |bd_id|
-      base_drink = BaseDrink.includes(:drink_method, :glass_type, { base_drinks_base_ingredients: [:base_ingredient, :unit] } ).find(bd_id)
+      base_drink = BaseDrink.with_recipe.find(bd_id)
       return base_drink if base_drink.check_handling_store_ids(params_handling_store_ids)
     end
     return nil
@@ -143,6 +147,22 @@ class BaseDrink < ApplicationRecord
     params_concrete_ingredients.values.each_with_object([]) do |concrete_ingredient, concrete_ingredients|
       concrete_ingredients << ConcreteIngredient.includes(:handling_stores).find(concrete_ingredient[:concrete_ingredient_id])
     end
+  end
+
+  # base_drinks カウント用
+  def self.base_drinks_from_base_ingredients(ids)
+    base_drinks = []
+    BaseDrink.all.includes(:base_drinks_base_ingredients).each do |base_drink|
+      base_drinks.push(base_drink) if base_drink.check_enough_ingredients?(ids)
+    end
+    return base_drinks
+  end
+
+  def check_enough_ingredients?(ids)
+    self.base_drinks_base_ingredients.each do |base_drinks_base_ingredient|
+      return false unless ids.include?(base_drinks_base_ingredient.base_ingredient_id)
+    end
+    return true
   end
 
 end
