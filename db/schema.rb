@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_02_040233) do
+ActiveRecord::Schema.define(version: 2020_09_08_132058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2020_07_02_040233) do
   create_table "base_drinks_base_ingredients", force: :cascade do |t|
     t.bigint "base_ingredient_id"
     t.bigint "base_drink_id"
-    t.float "amount"
+    t.string "amount"
     t.string "additional_explanation"
     t.bigint "unit_id"
     t.datetime "created_at", null: false
@@ -91,6 +91,14 @@ ActiveRecord::Schema.define(version: 2020_07_02_040233) do
     t.index ["substituting_id"], name: "index_substitutions_on_substituting_id"
   end
 
+  create_table "unit_conversions", force: :cascade do |t|
+    t.bigint "unit_id"
+    t.float "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["unit_id"], name: "index_unit_conversions_on_unit_id"
+  end
+
   create_table "units", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -105,4 +113,5 @@ ActiveRecord::Schema.define(version: 2020_07_02_040233) do
   add_foreign_key "concrete_ingredients", "base_ingredients"
   add_foreign_key "concrete_ingredients_handling_stores", "concrete_ingredients"
   add_foreign_key "concrete_ingredients_handling_stores", "handling_stores"
+  add_foreign_key "unit_conversions", "units"
 end
