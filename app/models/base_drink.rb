@@ -7,7 +7,7 @@ class BaseDrink < ApplicationRecord
 
   def self.find_by_params params
     params_base_drink_id_valid?(params) ? \
-      BaseDrink.includes(:drink_method, :glass_type, { base_drinks_base_ingredients: [:base_ingredient, :unit] } ).find(params[:base_drink_id]) : \
+      BaseDrink.includes(:drink_method, :glass_type, { base_drinks_base_ingredients: [:base_ingredient, { unit: [:unit_conversion] } ] } ).find(params[:base_drink_id]) : \
       BaseDrink.get_random(params[:filters])
   end
 
@@ -23,7 +23,7 @@ class BaseDrink < ApplicationRecord
   end
 
   def self.get_random params_filters
-    return BaseDrink.includes(:drink_method, :glass_type, { base_drinks_base_ingredients: [:base_ingredient, :unit] } ).find(rand(1..BaseDrink.count)) if params_filters.nil?
+    return BaseDrink.includes(:drink_method, :glass_type, { base_drinks_base_ingredients: [:base_ingredient, { unit: [:unit_conversion] } ] } ).find(rand(1..BaseDrink.count)) if params_filters.nil?
 
     params_base_ingredient_ids = Array(params_filters[:base_ingredient_ids]&.values&.map(&:to_i))
     params_handling_store_ids = params_filters[:handling_store_ids]&.values&.map(&:to_i) || [1,2,3]
@@ -39,7 +39,7 @@ class BaseDrink < ApplicationRecord
 
     cookable_base_drink_ids.shuffle!
     cookable_base_drink_ids.each do |bd_id|
-      base_drink = BaseDrink.includes(:drink_method, :glass_type, { base_drinks_base_ingredients: [:base_ingredient, :unit] } ).find(bd_id)
+      base_drink = BaseDrink.includes(:drink_method, :glass_type, { base_drinks_base_ingredients: [:base_ingredient, { unit: [:unit_conversion] } ] } ).find(bd_id)
       return base_drink if base_drink.check_handling_store_ids(params_handling_store_ids)
     end
     return nil
