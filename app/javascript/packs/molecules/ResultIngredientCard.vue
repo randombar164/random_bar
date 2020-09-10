@@ -4,9 +4,9 @@
       <v-img :src="imageUrl" width="112px" height="117px" contain class="IngImg"></v-img>
     </div>
     <div class="mr-4 mt-3">
-      <p class="supportInfo">{{ amount }}ml</p>
       <p class="resultIngName">{{ name }}</p>
       <p class="supportInfo">{{ baseIngName }}</p>
+      <p class="supportInfo">{{ amount }}{{ unit }}</p>
       <p class="supportInfo">{{ additionalExp }}</p>
       <amazon-btn :amazonUrl="amazonUrl"></amazon-btn>
     </div>
@@ -39,6 +39,8 @@ export default{
   margin-top: 15px;
 }
 .supportInfo{
+  padding: 0;
+  margin-bottom: 7px;
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
@@ -46,10 +48,11 @@ export default{
   line-height: 12px;
 }
 .resultIngName{
+  padding-top: 1.5px;
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
-  font-size: 20px;
-  line-height: 21px;
+  font-size: 1em;
+  line-height: 18px;
 }
 </style>
