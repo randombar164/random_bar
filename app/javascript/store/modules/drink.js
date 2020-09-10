@@ -56,6 +56,7 @@ export const drinkData = {
             "baseIngredientName": val.base_ingredient.name,
             "additionalExp": val.additional_explanation || null,
             "amount": val.unit.unit_conversion? String(Number(val.unit.unit_conversion.amount)*Number(val.amount)) : val.amount,
+            "unit": val.unit.unit_conversion? "ml" : val.unit.name,
             "concreteIngredientId": concreteIng.id,
             "name": concreteIng.name,
             "amazonUrl": concreteIng.tag.match(regexp_url)[0],
