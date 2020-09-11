@@ -70,7 +70,7 @@ export const drinkData = {
         console.error(err);
       })
     },
-    getAmazonTag({commit}, id){
+    async getAmazonTag({commit}, id){
       await axios
         .get(` /api/v1/base_ingredients/${id}`)
         .then(res => {
