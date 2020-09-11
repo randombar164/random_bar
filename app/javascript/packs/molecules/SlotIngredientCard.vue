@@ -5,7 +5,7 @@
     </div>
     <div class="my-5 mr-4">
       <p class="ingName">{{ name }}</p>
-      <p class="ingTotal">カクテル{{ count }}種類</p>
+      <!-- <p class="ingTotal">カクテル{{ count }}種類</p> -->
       <ing-slot-btn :gacha="toGacha" class="ingBtn" ></ing-slot-btn>
     </div>
   </v-card>
