@@ -8,7 +8,7 @@
       <p class="supportInfo">{{ baseIngName }}</p>
       <p class="supportInfo">{{ amount }}{{ unit }}</p>
       <p class="supportInfo">{{ additionalExp }}</p>
-      <amazon-btn :amazonUrl="amazonUrl"></amazon-btn>
+      <amazon-btn :amazonUrl="amazonUrl" :ingName="name"></amazon-btn>
     </div>
   </v-card>
 </v-row>
