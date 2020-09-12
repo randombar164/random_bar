@@ -9,7 +9,7 @@ class BaseDrinksBaseIngredient < ApplicationRecord
       BaseIngredient.includes(:substitutings).find(bi_id).substitutings.ids.each do |s_id|
         base_drink_ids_candidate.concat self.where(base_ingredient_id: s_id).group(:base_drink_id).having('count(base_drink_id)>=1').count.keys
       end
-      base_drink_ids.concat base_drink_ids_candidate.uniq
+      base_drink_ids.concat(base_drink_ids_candidate.uniq)
     end
     base_drink_ids.group_by(&:itself).select{ |k, v| v.length >= params_base_ingredient_ids.length}.keys
   end
