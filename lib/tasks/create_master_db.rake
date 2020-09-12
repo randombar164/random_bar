@@ -14,7 +14,7 @@ namespace :dbm do
     units_array = []
     CSV.read("./lib/tasks/main.csv").each_with_index do |row, ri|
       p ri
-      drink_name, method_name, type_name, ingredient_name, additional_explanation, amount, unit_name, cook_explanation, strength = row[0], row[1], row[2], row[3], row[4], row[5].to_f, row[6], row[7], row[8].to_f
+      drink_name, method_name, type_name, ingredient_name, additional_explanation, amount, unit_name, cook_explanation, strength = row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8].to_f
       p row
       drink_methods_array << method_name unless drink_methods_array.include? method_name
       glass_types_array << type_name unless glass_types_array.include? type_name
@@ -44,7 +44,7 @@ namespace :dbm do
     base_drinks = []
     CSV.read("./lib/tasks/main.csv").each_with_index do |row, ri|
       p ri
-      drink_name, method_name, type_name, ingredient_name, additional_explanation, amount, unit_name, cook_explanation, strength = row[0], row[1], row[2], row[3], row[4], row[5].to_f, row[6], row[7], row[8].to_f
+      drink_name, method_name, type_name, ingredient_name, additional_explanation, amount, unit_name, cook_explanation, strength = row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8].to_f
       p row
 
       if !base_drink_name_strength_set.include? [drink_name, strength]
@@ -66,7 +66,7 @@ namespace :dbm do
     base_drinks_base_ingredients = []
     CSV.read("./lib/tasks/main.csv").each_with_index do |row, ri|
       p ri
-      drink_name, method_name, type_name, ingredient_name, additional_explanation, amount, unit_name, cook_explanation, strength = row[0], row[1], row[2], row[3], row[4], row[5].to_f, row[6], row[7], row[8].to_f
+      drink_name, method_name, type_name, ingredient_name, additional_explanation, amount, unit_name, cook_explanation, strength = row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8].to_f
       p row
 
       base_drink = BaseDrink.find_by(name: drink_name, strength: strength)
@@ -135,6 +135,23 @@ namespace :dbm do
       p "Substitution import開始"
       Substitution.import substitutions
       p "Substitution完了"
+    rescue => e
+      p e
+    end
+
+    # UnitConversion の登録
+    unit_conversions = []
+    CSV.read("./lib/tasks/unit_conversions.csv").each_with_index do |row, ri|
+      p ri
+      unit_name, amount = row[0], row[1].to_f
+      p row
+      unit = Unit.find_by(name: unit_name)
+      unit_conversions << UnitConversion.new(unit_id: unit.id, amount: amount)
+    end
+    begin
+      p "UnitConversion import開始"
+      UnitConversion.import unit_conversions
+      p "UnitConversion完了"
     rescue => e
       p e
     end
