@@ -4,10 +4,20 @@ class ConcreteDrink
   def initialize(params)
     if params[:base_drink_id].present?
       @base_drink = BaseDrink.with_recipe.find(params[:base_drink_id])
+      return if @base_drink.nil?
       @concrete_ingredients = @base_drink.get_concrete_ingredients_from_params(params[:concrete_ingredients])
     else
       @base_drink = BaseDrink.get_random(params[:filters])
+      return if @base_drink.nil?
       @concrete_ingredients = @base_drink.get_random_concrete_ingredients(params[:filters])
+    end
+  end
+
+  def nil?
+    if @base_drink.nil?
+      return true
+    else
+      return false
     end
   end
 
