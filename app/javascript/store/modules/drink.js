@@ -1,14 +1,15 @@
 import axios from 'axios';
 import qs from 'qs';
+import ING_RECOMMEND from '../../packs/Ingrecommended.json';
 
 const regexp_url = /((h?)(ttps?:\/\/[a-zA-Z0-9.\-_@:/~?%&;=+#',()*!]+))/g; // ']))/;
+
 export const drinkData = {
   namespaced: true,
   state: {
     cocktailRecipe: null,
     drinkId: null,
-    ingredientAmazonUrl: null,
-    ingredientAmazonImage: null
+    ingredientCardsInfo: null
     // cockNum: null
   },
   getters: {
@@ -21,11 +22,8 @@ export const drinkData = {
     addDrinkId(state, payload){
       state.drinkId = payload.id;
     },
-    addAmazonUrl(state, payload){
-      state.amazonUrl = payload.amazonUrl;
-    },
-    addAmazonImage(state, payload){
-      state.amazonImage = payload.amazonImage;
+    addIngredientCardsInfo(state, payload){
+      state.ingredientCardsInfo = payload.ingredientCardsInfo;
     }
     // addCockNum(state, payload){
     //   state.cockNum = payload.count;
@@ -43,13 +41,11 @@ export const drinkData = {
       await axios
       .get("/api/v1/concrete_drinks", {params: searchParams, paramsSerializer})
       .then(res => {
-        console.log(res);
         const baseDrink = res.data.concrete_drink.base_drink;
         recipe.id = baseDrink.id;
         recipe.name = baseDrink.name;
         baseDrink.base_drinks_base_ingredients.map((val, index)=>{
           const concreteIng = res.data.concrete_drink.concrete_ingredients.filter(v => v.base_ingredient_id == val.base_ingredient.id)[0];
-          console.log(concreteIng);
           recipe.ingredients.push({
             "id": val.id,
             "baseIngredientId": val.base_ingredient_id,
@@ -70,18 +66,39 @@ export const drinkData = {
         console.error(err);
       })
     },
-    async getAmazonTag({commit}, id){
-      await axios
-        .get(` /api/v1/base_ingredients/${id}`)
-        .then(res => {
-          const ingredients = res.data.concrete_ingredients;
-          const index =  Math.floor( Math.random() * ingredients.length ) ;
-          commit('addAmazonUrl', { amazonUrl: ingredients[index].tag.match(regexp_url)[0]});
-          commit('addAmazonImage', { amazonImage:  ingredients[index].tag.match(regexp_url)[1]});
-        })
-        .catch(err => {
-          console.error(err);
+    getIngredietCards({commit}){
+      async function getUrl(id){
+        let amazonImage;
+          await axios
+            .get(` /api/v1/base_ingredients/${id}`)
+            .then(res => {
+              const ingredients = res.data.base_ingredient.concrete_ingredients;
+              const index =  Math.floor( Math.random() * ingredients.length ) ;
+              amazonImage = ingredients[index].tag.match(regexp_url)[1];
+            })
+            .catch(err => {
+              console.error(err);
+            });
+            return amazonImage;
+      };
+      let cardsInfo = [];
+      ING_RECOMMEND.option.map( v => {
+        let ingredients = [];
+        v.ingredients.map( async(k) => {
+          const amazonImage = await getUrl(k.id);
+          ingredients.push({
+            "id": k.id,
+            "name": k.name,
+            "amazonImage": amazonImage
+          });
         });
+        cardsInfo.push({
+          "id": v.id,
+          "category": v.category,
+          "ingredients": ingredients
+        });
+      });
+      commit('addIngredientCardsInfo', {ingredientCardsInfo: cardsInfo});
     },
     setRecipe({ state }){
       localStorage.setItem('cocktailRecipe', JSON.stringify(state.cocktailRecipe));
