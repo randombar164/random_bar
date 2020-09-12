@@ -12,7 +12,7 @@
 </template>
 <script>
 import SlotIngredientCard from "packs/molecules/SlotIngredientCard";
-import Ingrecommended from "../Ingrecommended.json";
+import { mapState, mapActions } from 'vuex';
 
 export default{
   components:{
@@ -20,8 +20,23 @@ export default{
   },
   data: function(){
     return{
-      "recommendedIngredients":Ingrecommended.option
+      "recommendedIngredients": null
     }
+  },
+  computed: {
+    ...mapState('drinkData',[
+      'ingredientCardsInfo',
+    ])
+  },
+  created(){
+    this.getIngredietCards();
+    this.recommendedIngredients = this.ingredientCardsInfo;
+    console.log(this.ingredientCardsInfo);
+  },
+  methods: {
+    ...mapActions('drinkData',[
+      'getIngredietCards'
+    ]),
   }
 }
 </script>
