@@ -28,27 +28,23 @@ export default{
 </script>
 <style scoped>
 #topImg{
-  background-color:rgba(255,255,255,0.52);
   background-image: url("https://recruit.fiveneeds.co.jp/wp-content/uploads/2019/09/chuttersnap-9UD0JHnWyVE-unsplash.jpg");
   background-size:cover;
   width:100%;
-  height: 583px;
+  height: 300px;
+  background-color:rgba(255,255,255,0.7);
+  background-blend-mode:lighten;
 }
 .exp{
-  position: absolute;
-  top: 167px;
-  bottom: 356px;
-  left: 18px;
   font-size: 20px;
-  color: #553C60;
-}
-.exp-com{
-  background-color: white;
+  line-height: 40px;
+  color: #000;
+  text-align: center;
+  padding-top: 90px;
 }
 .gachaBtn{
-  position: absolute;
   width: 191px;
   height: 57px;
-  top: 505px;
+  margin-top: 20px;
 }
 </style>
