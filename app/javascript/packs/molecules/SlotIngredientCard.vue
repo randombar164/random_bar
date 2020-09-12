@@ -3,7 +3,7 @@
     <div class="float-left my-5 mx-4">
       <v-img :src="amazonImage" height="117px"contain  width="112px"></v-img>
     </div>
-    <div class="my-5 mr-4">
+    <div class="ingCard-info">
       <p class="ingName">{{ name }}</p>
       <!-- <p class="ingTotal">カクテル{{ count }}種類</p> -->
       <ing-slot-btn :gacha="toGacha" class="ingBtn" ></ing-slot-btn>
@@ -38,6 +38,7 @@ export default{
 }
 .ingBtn{
   width: 50%;
+  margin-top: 10px;
 }
 .ingName{
   font-family: Roboto;
@@ -52,5 +53,8 @@ export default{
   font-weight: normal;
   font-size: 16px;
   line-height: 19px;
+}
+.ingCard-info{
+  margin-top: 40px;
 }
 </style>
