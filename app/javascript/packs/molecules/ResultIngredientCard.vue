@@ -3,7 +3,7 @@
     <div class="float-left mt-3 mx-4">
       <v-img :src="imageUrl" width="112px" height="117px" contain class="IngImg"></v-img>
     </div>
-    <div class="mr-4 mt-3">
+    <div class="ingResults-info">
       <p class="resultIngName">{{ name }}</p>
       <p class="supportInfo">{{ baseIngName }}</p>
       <p class="supportInfo">{{ amount }}{{ unit }}</p>
@@ -49,10 +49,13 @@ export default{
 }
 .resultIngName{
   padding-top: 1.5px;
-  font-family: Roboto;
+  font-family: "Roboto";
   font-style: normal;
   font-weight: normal;
   font-size: 1em;
   line-height: 18px;
+}
+.ingResults-info{
+  margin: auto;
 }
 </style>
