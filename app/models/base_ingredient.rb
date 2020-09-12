@@ -29,7 +29,7 @@ class BaseIngredient < ApplicationRecord
     return handling_store_ids
   end
 
-  def has_handling_store_ids handling_store_ids
+  def check_handling_store_ids handling_store_ids
     self.concrete_ingredients.each do |ci|
       return true if (handling_store_ids - ci.handling_store_ids).length != handling_store_ids.length
     end
