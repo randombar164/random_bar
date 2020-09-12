@@ -9,30 +9,9 @@ class BaseDrink < ApplicationRecord
   scope :with_recipe, -> { includes(:drink_method, :glass_type, { base_drinks_base_ingredients: [:base_ingredient, { unit: [:unit_conversion] } ] } ) }
   scope :random,      -> { where( 'id >= ?', rand(BaseDrink.first.id..BaseDrink.last.id) ).first }
 
-  # def self.find_by_params params
-  #   params_base_drink_id_valid?(params) ? \
-  #     BaseDrink.with_recipe.find(params[:base_drink_id]) : \
-  #     BaseDrink.get_random(params[:filters])
-  # end
-
-  # def self.params_base_drink_id_valid? params
-  #   if params[:base_drink_id].blank? || !Array(1..BaseDrink.last.id).include?(params[:base_drink_id]&.to_i)
-  #     params.delete(:concrete_ingredients)
-  #     params.delete(:base_drink_id)
-  #     return false
-  #   else
-  #     params.delete(:filters)
-  #     return true
-  #   end
-  # end
-
   def self.get_random params_filters
     return BaseDrink.with_recipe.random if params_filters.nil?
 
-    # params_base_ingredient_ids = Array(params_filters[:base_ingredient_ids]&.values&.map(&:to_i))
-    # params_handling_store_ids = params_filters[:handling_store_ids]&.values&.map(&:to_i) || [1,2,3]
-
-    # params_base_ingredient_ids.each do |bi_id|
     params_filters[:base_ingredient_ids].each do |bi_id|
       base_ingredient = BaseIngredient.find(bi_id)
       base_ingredient_with_substitutings = [base_ingredient].concat(base_ingredient.substitutings)
@@ -67,59 +46,6 @@ class BaseDrink < ApplicationRecord
     return true
   end
 
-  # =======================================================================================================================
-
-  # def concrete_ingredients(params)
-  #   params_concrete_ingredients_valid?(params) ? \
-  #     self.get_concrete_ingredients_from_params(params[:concrete_ingredients]) : \
-  #     self.get_random_concrete_ingredients(params[:filters])
-  # end
-
-  # def params_concrete_ingredients_valid? params
-  #   return false if params[:concrete_ingredients].nil?
-  #   return false unless check_params_base_ingredient_ids_with_concrete_ingredient_ids(params)
-  #   return false if !self.check_params_base_ingredient_ids(params) && !self.check_substitutions(params)
-  #   return true
-  # end
-
-  # def check_params_base_ingredient_ids_with_concrete_ingredient_ids params
-  #   params[:concrete_ingredients].values.each do |concrete_ingredient|
-  #     return false if concrete_ingredient[:base_ingredient_id].nil? || concrete_ingredient[:concrete_ingredient_id].nil?
-  #     return false if concrete_ingredient[:base_ingredient_id].to_i != ConcreteIngredient.find(concrete_ingredient[:concrete_ingredient_id]).base_ingredient_id
-  #   end
-  #   return true
-  # end
-
-  # def check_params_base_ingredient_ids params
-  #   params_base_ingredient_ids, params_concrete_ingredient_ids = get_ingredient_ids_from_params(params)
-  #   self.base_ingredients.each_with_index do |bi, idx|
-  #     return false unless bi.id == params_base_ingredient_ids[idx]
-  #   end
-  #   return true
-  # end
-
-  # def check_substitutions params
-  #   params_base_ingredient_ids, params_concrete_ingredient_ids = get_ingredient_ids_from_params(params)
-  #   flag = true
-  #   self.base_ingredients.each_with_index do |bi,idx|
-  #     if bi.id != params_base_ingredient_ids[idx]
-  #       # do not return here! throw a segmentation fault.
-  #       flag = false if !bi.substitutions.ids.include? params_base_ingredient_ids[idx]
-  #     end
-  #   end
-  #   return flag
-  # end
-
-  # def get_ingredient_ids_from_params(params)
-  #   base_ingredient_ids = []
-  #   concrete_ingredient_ids = []
-  #   params[:concrete_ingredients].values.each do |concrete_ingredient|
-  #     base_ingredient_ids << concrete_ingredient[:base_ingredient_id].to_i
-  #     concrete_ingredient_ids << concrete_ingredient[:concrete_ingredient_id].to_i
-  #   end
-  #   return base_ingredient_ids, concrete_ingredient_ids
-  # end
-
   def get_random_concrete_ingredients(params_filters)
     if params_filters.nil?
       concrete_ingredients = self.base_ingredients.each_with_object([]) do |bi, concrete_ingredients|
@@ -132,7 +58,6 @@ class BaseDrink < ApplicationRecord
       end and return concrete_ingredients
     end
 
-    # filter_base_ingredient_ids, filter_handling_store_ids = Array(params_filters[:base_ingredient_ids]&.values&.map(&:to_i)), Array(params_filters[:handling_store_ids]&.values&.map(&:to_i))
     concrete_ingredients = self.base_ingredients.each_with_object([]) do |base_ingredient, concrete_ingredients|
       if params_filters[:base_ingredient_ids].include?(base_ingredient.id)
         concrete_ingredients_candidates = Array(base_ingredient.concrete_ingredients)
