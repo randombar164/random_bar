@@ -14,16 +14,7 @@ class BaseDrink < ApplicationRecord
 
     params_filters[:base_ingredient_ids].each do |bi_id|
       base_ingredient = BaseIngredient.find(bi_id)
-      base_ingredient_with_substitutings = [base_ingredient].concat(base_ingredient.substitutings)
-      is_break = false
-      base_ingredient_with_substitutings.each do |ing|
-        is_break = true and break if ing.check_handling_store_ids(params_filters[:handling_store_ids])
-      end
-      if is_break
-        break
-      else
-        return nil
-      end
+      return nil unless base_ingredient.has_handling_store_ids(params_filters[:handling_store_ids])
     end
 
     cookable_base_drink_ids = params_filters[:base_ingredient_ids].present? ? \
