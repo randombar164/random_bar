@@ -37,7 +37,6 @@ export const drinkData = {
         "ingredients":[]
       };
       const paramsSerializer = (params) => qs.stringify(params);
-      console.log(paramsSerializer(searchParams));
       await axios
       .get("/api/v1/concrete_drinks", {params: searchParams, paramsSerializer})
       .then(res => {

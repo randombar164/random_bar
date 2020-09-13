@@ -31,7 +31,6 @@ export default{
   created(){
     this.getIngredietCards();
     this.recommendedIngredients = this.ingredientCardsInfo;
-    console.log(this.ingredientCardsInfo);
   },
   methods: {
     ...mapActions('drinkData',[
