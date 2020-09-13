@@ -27,7 +27,8 @@ class QueryParamsValidator
         base_drink_from_params = BaseDrink.find(@query_params[:base_drink_id])
         return false if base_drink_from_params.base_ingredients.length != concrete_ingredients.length
         is_break = false
-        base_drink_from_params.base_ingredients.each_with_index do |base_ingredient, idx|
+        base_drink_from_params.base_drinks_base_ingredients.each_with_index do |bd_bi, idx|
+            base_ingredient = bd_bi.base_ingredient
             bi_ids_include_substitutions = [base_ingredient.id].concat(base_ingredient.substitutions.ids)
             is_break = true and break unless bi_ids_include_substitutions.include?(concrete_ingredients[idx].base_ingredient_id)
         end

@@ -39,8 +39,9 @@ class BaseDrink < ApplicationRecord
 
   def get_random_concrete_ingredients(params_filters)
     if params_filters.nil?
-      concrete_ingredients = self.base_ingredients.each_with_object([]) do |bi, concrete_ingredients|
-        substitutions = bi.substitutions
+      concrete_ingredients = self.base_drinks_base_ingredients.each_with_object([]) do |bd_bi, concrete_ingredients|
+        base_ingredient = bd_bi.base_ingredient
+        substitutions = base_ingredient.substitutions
         substitutions_count = substitutions.count
         num = rand(substitutions_count + 1)
         num == substitutions_count ? \
@@ -49,7 +50,8 @@ class BaseDrink < ApplicationRecord
       end and return concrete_ingredients
     end
 
-    concrete_ingredients = self.base_ingredients.each_with_object([]) do |base_ingredient, concrete_ingredients|
+    concrete_ingredients = self.base_drinks_base_ingredients.each_with_object([]) do |bd_bi, concrete_ingredients|
+      base_ingredient = bd_bi.base_ingredient
       if params_filters[:base_ingredient_ids].include?(base_ingredient.id)
         concrete_ingredients_candidates = Array(base_ingredient.concrete_ingredients)
       else
