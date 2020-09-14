@@ -57,7 +57,8 @@ export default{
       this.removeRecipe();
       await this.getDrink({
         filters:{
-          base_ingredient_ids:[ Number(this.id) ]
+          base_ingredient_ids:[ Number(this.id) ],
+          handling_store_ids: [1]
         }
       });
       this.setRecipe();

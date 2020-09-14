@@ -1,5 +1,5 @@
 <template>
-  <a :href="amazonUrl">
+  <a :href="amazonUrl" @click="trackClick" target="_blank">
     <v-btn  class="amazonBtn">
       Amazonで購入
     </v-btn>
@@ -8,8 +8,14 @@
 <script>
 export default{
   props:[
-    "amazonUrl"
-  ]
+    "amazonUrl",
+    "ingName"
+  ],
+  methods: {
+    trackClick() {
+      this.$ga.event('click', 'amazon-link', this.ingName, 1)
+    }
+  }
 }
 </script>
 <style scoped>

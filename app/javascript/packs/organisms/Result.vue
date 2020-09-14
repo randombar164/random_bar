@@ -5,7 +5,7 @@
       <v-col cols="12" class="cocktailName">{{ cocktailRecipe.name }}</v-col>
       <v-col cols="12" class="ings">材料</v-col>
       <v-col cols="12" class="results" v-for="recipe in cocktailRecipe.ingredients" :key=cocktailRecipe.ingredients.id>
-        <result-ingredient-card :amazonUrl="recipe.amazonUrl" :imageUrl="recipe.imageUrl" :name="recipe.name" :unit="recipe.unit" :amount="recipe.amount"></result-ingredient-card>
+        <result-ingredient-card :amazonUrl="recipe.amazonUrl" :imageUrl="recipe.imageUrl" :name="recipe.name" :amount="recipe.amount" :unit="recipe.unit" :baseIngName="recipe.baseIngredientName" :additionalExp="recipe.additionalExp"></result-ingredient-card>
       </v-col>
       <v-col cols="12" class="d-flex justify-center mt-5">
         <slot-btn :gacha="gachaMore" :msg="btnMsg" :width="width"></slot-btn>
@@ -62,12 +62,15 @@ export default{
       if(this.name){
          await this.getDrink({
           filters:{
-            base_ingredient_ids:[ Number(this.id) ]
+            base_ingredient_ids:[ Number(this.id) ],
+            handling_store_ids: [1]
           }
         })
       }else{
         await this.getDrink({
-          handling_store_ids:[1,2,3]
+          filters:{
+            handling_store_ids:[1]
+          }
         })
       };
       this.setRecipe();
