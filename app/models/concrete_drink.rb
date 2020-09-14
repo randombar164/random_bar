@@ -24,7 +24,7 @@ class ConcreteDrink
   def to_json
     concrete_drink_json = {
       base_drink: JSON.parse(@base_drink.to_json(include: [:drink_method, :glass_type, :base_ingredients, base_drinks_base_ingredients: {include: [:base_ingredient, unit:{include: [:unit_conversion] }]}])),
-      concrete_ingredients: JSON.parse(@concrete_ingredients.to_json(include: [:handling_stores]))
+      concrete_ingredients: JSON.parse(@concrete_ingredients.to_json(include: [:handling_stores, :base_ingredient]))
     }
   end
 end
