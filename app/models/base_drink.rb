@@ -45,7 +45,7 @@ class BaseDrink < ApplicationRecord
         substitutions_count = substitutions.count
         num = rand(substitutions_count + 1)
         num == substitutions_count ? \
-          concrete_ingredients << bi.find_random_concrete_ingredient : \
+          concrete_ingredients << base_ingredient.find_random_concrete_ingredient : \
           concrete_ingredients << substitutions[num].find_random_concrete_ingredient
       end and return concrete_ingredients
     end
