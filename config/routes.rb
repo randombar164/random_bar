@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       get 'concrete_drinks' => 'concrete_drinks#index'
       get 'base_ingredients/:id' => 'base_ingredients#show'
       get 'base_ingredients/:id/base_drinks_count' => 'base_ingredients#base_drinks_count'
+      get 'base_ingredients' => 'base_ingredients#index'
     end
   end
 end
