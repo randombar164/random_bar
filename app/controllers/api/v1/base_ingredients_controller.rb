@@ -1,5 +1,11 @@
 class Api::V1::BaseIngredientsController < Api::V1::BaseController
 
+  def index
+    ids = Array(params[:ids]&.values&.map(&:to_i))
+    base_ingredients = BaseIngredient.includes(:concrete_ingredients).find(ids)
+
+    render json: {base_ingredients: base_ingredients}, include: [:concrete_ingredients]
+  end
 
   def show
     base_ingredient = BaseIngredient.includes(:concrete_ingredients).find(params[:id])
