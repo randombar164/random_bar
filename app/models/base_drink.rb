@@ -12,10 +12,10 @@ class BaseDrink < ApplicationRecord
   def self.get_random params_filters
     return BaseDrink.with_recipe.random if params_filters.nil?
 
-    params_filters[:base_ingredient_ids].each do |bi_id|
-      base_ingredient = BaseIngredient.find(bi_id)
-      return nil unless base_ingredient.has_handling_store_ids(params_filters[:handling_store_ids])
-    end
+    # params_filters[:base_ingredient_ids].each do |bi_id|
+    #   base_ingredient = BaseIngredient.find(bi_id)
+    #   return nil unless base_ingredient.has_handling_store_ids(params_filters[:handling_store_ids])
+    # end
 
     cookable_base_drink_ids = params_filters[:base_ingredient_ids].present? ? \
                               BaseDrinksBaseIngredient.get_base_drink_ids_from_base_ingredient_ids(params_filters[:base_ingredient_ids]) : \
