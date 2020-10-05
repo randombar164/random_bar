@@ -17,8 +17,8 @@ export default{
   ],
   data(){
     return{
-      btnMsg: "ガチャる",
-      width: "172px"
+      btnMsg: "材料を登録する",
+      width: "220px"
     }
   },
   components:{
