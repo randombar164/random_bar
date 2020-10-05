@@ -41,7 +41,7 @@ export default{
 .supportInfo{
   padding: 0;
   margin-bottom: 7px;
-  font-family: Roboto;
+  font-family: "Roboto";
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
