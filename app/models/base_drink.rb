@@ -9,34 +9,6 @@ class BaseDrink < ApplicationRecord
   scope :with_recipe, -> { includes(:drink_method, :glass_type, { base_drinks_base_ingredients: [:base_ingredient, { unit: [:unit_conversion] } ] } ) }
   scope :random,      -> { where( 'id >= ?', rand(BaseDrink.first.id..BaseDrink.last.id) ).first }
 
-  def self.get_random params_filters
-    return BaseDrink.with_recipe.random if params_filters.nil?
-
-    # params_filters[:base_ingredient_ids].each do |bi_id|
-    #   base_ingredient = BaseIngredient.find(bi_id)
-    #   return nil unless base_ingredient.has_handling_store_ids(params_filters[:handling_store_ids])
-    # end
-
-    cookable_base_drink_ids = params_filters[:base_ingredient_ids].present? ? \
-                              BaseDrinksBaseIngredient.get_base_drink_ids_from_base_ingredient_ids(params_filters[:base_ingredient_ids]) : \
-                              Array(1..BaseDrink.last.id)
-    return nil if cookable_base_drink_ids.empty?
-
-    cookable_base_drink_ids.shuffle!
-    cookable_base_drink_ids.each do |bd_id|
-      base_drink = BaseDrink.with_recipe.find(bd_id)
-      return base_drink if base_drink.check_handling_store_ids(params_filters[:handling_store_ids])
-    end
-    return nil
-  end
-
-  def check_handling_store_ids(handling_store_ids)
-    self.base_ingredients.each do |bi|
-      return false if (handling_store_ids - bi.handling_store_ids_without_unavailable).length == handling_store_ids.length
-    end
-    return true
-  end
-
   def get_random_concrete_ingredients(params_filters)
     if params_filters.nil?
       concrete_ingredients = self.base_drinks_base_ingredients.each_with_object([]) do |bd_bi, concrete_ingredients|
