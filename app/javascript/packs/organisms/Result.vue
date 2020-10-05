@@ -1,6 +1,9 @@
 <template>
   <v-container>
     <v-row>
+      <v-btn @click="toRegister" text color="#FF6749">< 材料登録に戻る</v-btn>
+    </v-row>
+    <v-row>
       <v-col cols="12" v-if="name"><span>{{ name }}</span>を使ったカクテルガチャ</v-col>
       <v-col cols="12" class="cocktailName">{{ cocktailRecipe.name }}</v-col>
       <v-col cols="12" class="ings">材料</v-col>
@@ -20,7 +23,7 @@
 import ResultIngredientCard from "packs/molecules/ResultIngredientCard";
 import SlotBtn from "packs/atoms/SlotBtn";
 import ShareBtn from "packs/atoms/ShareBtn";
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex';
 
 export default{
   components:{
@@ -40,42 +43,38 @@ export default{
     ...mapState('drinkData',[
       'cocktailRecipe',
       'drinkId',
+      'baseIngredientIds',
+      'handlingStoreIds'
     ])
   },
   created(){
-    this.getRecipe();
-    if(this.$route.query.IngName){
-      this.name = this.$route.query.IngName;
-      this.id = this.$route.query.IngId;
-    }
+    if(this.baseIngredientIds.length < 1){
+      this.getRecipe();
+      console.log("called");
+    };
   },
 
   methods: {
     ...mapActions('drinkData',[
       'getRecipe',
       'getDrink',
-      'setRecipe',
-      'removeRecipe',
+      'setCocktailRecipe',
+      'removeCocktailRecipe',
     ]),
     async gachaMore(){
-      this.removeRecipe();
-      if(this.name){
-         await this.getDrink({
+      this.removeCocktailRecipe();
+      await this.getDrink({
           filters:{
-            base_ingredient_ids:[ Number(this.id) ],
-            handling_store_ids: [1]
+            base_ingredient_ids:[ ...this.baseIngredientIds ],
+            handling_store_ids: [ ...this.handlingStoreIds ]
           }
         })
-      }else{
-        await this.getDrink({
-          filters:{
-            handling_store_ids:[1]
-          }
-        })
-      };
-      this.setRecipe();
-      this.$router.push({ path:`/result/${this.drinkId}`, query:{IngName: this.name, IngId: this.id}});
+      this.setCocktailRecipe();
+      this.$router.push({ path:`/result/${this.drinkId}`});
       window.scrollTo(0,0);
+    },
+    toRegister(){
+      this.$router.push({path: '/register'});
     }
   }
 }
@@ -85,7 +84,7 @@ span{
   color: #FF6749;
 }
 .cocktailName{
-  font-family: Roboto;
+  font-family: "Roboto";
   font-style: normal;
   font-weight: normal;
   font-size: 28px;
@@ -95,7 +94,7 @@ span{
 }
 .ings{
   border-bottom:solid;
-  font-family: Roboto;
+  font-family: "Roboto";
   font-style: normal;
   font-weight: bold;
   font-size: 16px;
