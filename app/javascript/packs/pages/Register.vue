@@ -26,16 +26,21 @@
     </v-col>
   </v-row>
   <v-overlay :value="overlay">
+    <v-row justify="end">
+    <v-icon class="icon mb-1" @click="overlay = !overlay" large>mdi-close</v-icon>
+    </v-row>
     <v-autocomplete
       v-model="selectedItem"
-      :items="baseIngredientsList"
+      :items="items"
       item-text="name"
       item-value="id"
+      :search-input.sync="search"
       placeholder="材料名を入力してください"
+      hide-no-data
       no-filter
       return-object
     ></v-autocomplete>
-    <v-btn @click="appendIng">close overlay</v-btn>
+    <v-btn class="mt-5" @click="appendIng">登録する</v-btn>
   </v-overlay>
   <v-row v-if="alert">
     <v-col cols="12" class="d-flex justify-center">
@@ -69,6 +74,8 @@ export default{
       search: null,
       selectedItem: null,
       alert: false,
+      loading: false,
+      items: [],
       width: "95%",
       btnMsg: "作れるカクテルを見つける"
     }
@@ -76,6 +83,8 @@ export default{
   created(){
     this.getBaseIngList();
     this.removeRecipe();
+    this.handlingStoreIds?.map((v) => this.deleteHandlingStoreId(v));
+    this.baseIngredientIds?.map((v) => this.removeRegisteredIng(v));
   },
   computed:{
     ...mapState('drinkData',[
@@ -87,6 +96,11 @@ export default{
       'handlingStoreIds'
     ])
   },
+  watch: {
+     search (val) {
+       val && val !== this.selectedItem && this.querySelections(val)
+     },
+   },
   methods: {
     ...mapActions('drinkData',[
       'getBaseIngList',
@@ -98,14 +112,22 @@ export default{
       'removeRecipe',
       'removeRegisteredIng'
     ]),
+    querySelections (v) {
+        this.loading = true
+        // Simulated ajax query
+        setTimeout(() => {
+          this.items = this.baseIngredientsList.filter(e => {
+            return (e.name || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
+          })
+          this.loading = false
+        }, 500)
+      },
     setStore(id){
       if(this.handlingStoreIds.includes(id)){
         this.deleteHandlingStoreId(id);
-        console.log("called deleteHandlingStoreIds");
       }else{
         this.setHandlingStoreId(id);
       };
-      console.log(this.handlingStoreIds);
     },
     appendIng() {
       this.setRegisteredIng(this.selectedItem);
@@ -122,7 +144,6 @@ export default{
           handling_store_ids: [ ...this.handlingStoreIds ]
         }
       });
-      console.log(this.cocktailRecipe);
       this.setRecipe();
       this.$router.push({ path:`/result/${this.drinkId}`});
       window.scrollTo(0,0);
@@ -151,5 +172,8 @@ export default{
 }
 .alertBtn{
   color: #2A5078;
+}
+.icon{
+
 }
 </style>

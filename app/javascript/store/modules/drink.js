@@ -28,9 +28,9 @@ export const drinkData = {
   namespaced: true,
   state: {
     cocktailRecipe: {
-      "id": null,
-      "name": null,
-      "ingredients": null
+      id: null,
+      name: null,
+      ingredients: null
     },
     drinkId: null,
     ingredientCardsInfo: null,
@@ -48,7 +48,6 @@ export const drinkData = {
       state.cocktailRecipe.id = payload.id;
       state.cocktailRecipe.name = payload.name;
       state.cocktailRecipe.ingredients = payload.ingredients;
-      console.log(state.cocktailRecipe);
     },
     addDrinkId(state, payload){
       state.drinkId = payload.id;
@@ -63,9 +62,7 @@ export const drinkData = {
       state.registeredIngList.push(payload.registeredIng);
     },
     removeRegisteredIngList(state, payload){
-      console.log(payload.id);
       state.registeredIngList = state.registeredIngList.filter((v) => v.id !== payload.id);
-      console.log(state.registeredIngList);
     },
     addBaseIngredientIds(state, payload){
       state.baseIngredientIds.push(payload.id);
@@ -74,7 +71,7 @@ export const drinkData = {
       state.baseIngredientIds = state.baseIngredientIds.filter((v) => v.id !== payload.id);
     },
     addHandlingStoreIds(state, payload){
-      state.handlingStoreIds.push(...payload.handlingStoreId);
+      state.handlingStoreIds.push(payload.handlingStoreId);
     },
     removeHandlingStoreIds(state, payload){
       state.handlingStoreIds = state.handlingStoreIds.filter((v) => v !== payload.handlingStoreId);
@@ -87,7 +84,6 @@ export const drinkData = {
     async getDrink({ commit }, searchParams){
       const paramsSerializer = (params) => qs.stringify(params);
       let recipe = [];
-      console.log(searchParams);
       await axios
       .get("/api/v1/concrete_drinks", {params: searchParams, paramsSerializer})
       .then(res => {
@@ -107,12 +103,10 @@ export const drinkData = {
             "imageUrl": concreteIng[index].tag.match(regexp_url)[1]
           })
         });
-        console.log(recipe);
         commit('addCocktail', {id: baseDrink.id, name: baseDrink.name, ingredients: recipe});
         commit('addDrinkId', {id: baseDrink.id});
       })
       .catch(err => {
-        console.error(err);
       })
     },
 
@@ -141,16 +135,13 @@ export const drinkData = {
       axios
       .get("/api/v1/base_ingredients")
       .then(res => {
-        console.log(res);
         commit('addBaseIngredientList', { baseIngredientsList: res.data.base_ingredients});
       })
       .catch(err => {
-        console.error(err);
       })
     },
 
     setRegisteredIng({commit},obj){
-      console.log(obj.id);
       const registerdIng = {
         "id": obj.id,
         "name": obj.name,
@@ -161,13 +152,12 @@ export const drinkData = {
     },
 
     removeRegisteredIng({commit}, id){
-      console.log("called");
       commit('removeRegisteredIngList', { id: id });
       commit('removeBaseIngredientIds', { id: id });
     },
 
     setHandlingStoreId({commit}, id){
-      commit('addHandlingStoreIds', {handlingStoreId: [id]} );
+      commit('addHandlingStoreIds', {handlingStoreId: id} );
     },
 
     deleteHandlingStoreId({commit}, id){
@@ -176,9 +166,12 @@ export const drinkData = {
 
     setRecipe({ state }){
       const recipe = {
-        cocktailRecipe: state.cocktailRecipe,
-        handlingStore: state.handlingStore
+        cocktailRecipe: JSON.parse(JSON.stringify(state.cocktailRecipe)),
+        handlingStoreIds: state.handlingStoreIds,
+        baseIngredientIds: state.baseIngredientIds
       }
+      console.log(recipe);
+      console.log(JSON.stringify(recipe));
       localStorage.setItem('recipe', JSON.stringify(recipe));
     },
 
@@ -186,7 +179,6 @@ export const drinkData = {
       const storageItem = JSON.parse(localStorage.getItem('recipe'));
       if(storageItem){
         storageItem.cocktailRecipe = state.cocktailRecipe;
-        console.log(storageItem);
         localStorage.setItem('recipe', JSON.stringify(storageItem));
       };
     },
@@ -195,8 +187,8 @@ export const drinkData = {
       const recipe =  JSON.parse(localStorage.getItem('recipe'));
       const cocktailRecipe = recipe.cocktailRecipe;
       commit('addCocktail', { id: cocktailRecipe.id, name: cocktailRecipe.name, ingredients: cocktailRecipe.ingredients });
-      commit('addHandlingStore', { handlingStore: recipe.handlingStore });
-      console.log(recipe);
+      recipe.handlingStoreIds.map((v) => commit('addHandlingStoreIds', { handlingStoreId: v }))
+      recipe.baseIngredientIds.map((v) => commit('addBaseIngredientIds', { id: v }));
       commit('addDrinkId', { id: state.cocktailRecipe.id});
     },
 
