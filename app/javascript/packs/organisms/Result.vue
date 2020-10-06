@@ -50,7 +50,7 @@ export default{
   created(){
     if(this.baseIngredientIds.length < 1){
       this.getRecipe();
-      console.log("called");
+      // console.log("called");
     };
   },
 
@@ -70,6 +70,7 @@ export default{
           }
         })
       this.setCocktailRecipe();
+      this.$ga.event('click', 'button', "gacha_btn", 1) // ga の処理
       this.$router.push({ path:`/result/${this.drinkId}`});
       window.scrollTo(0,0);
     },

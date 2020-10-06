@@ -170,8 +170,8 @@ export const drinkData = {
         handlingStoreIds: state.handlingStoreIds,
         baseIngredientIds: state.baseIngredientIds
       }
-      console.log(recipe);
-      console.log(JSON.stringify(recipe));
+      // console.log(recipe);
+      // console.log(JSON.stringify(recipe));
       localStorage.setItem('recipe', JSON.stringify(recipe));
     },
 
