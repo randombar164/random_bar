@@ -3,15 +3,7 @@ class BaseDrinksBaseIngredient < ApplicationRecord
   belongs_to :base_drink
   belongs_to :unit
 
-  def self.get_base_drink_ids_from_base_ingredient_ids params_filter
-    if params_filter[:and] == true
-      BaseDrinksBaseIngredient.and_get_base_drink_ids_from_base_ingredient_ids(params_filter[:base_ingredient_ids])
-    else
-      BaseDrinksBaseIngredient.or_get_base_drink_ids_from_base_ingredient_ids(params_filter[:base_ingredient_ids])
-    end
-  end
-
-  def self.and_get_base_drink_ids_from_base_ingredient_ids params_base_ingredient_ids
+  def self.get_base_drink_ids_from_base_ingredient_ids params_base_ingredient_ids
     base_drink_ids = params_base_ingredient_ids.each_with_object([]) do |bi_id, base_drink_ids|
       base_drink_ids_candidate = self.where(base_ingredient_id: bi_id).group(:base_drink_id).having('count(base_drink_id)>=1').count.keys
       BaseIngredient.includes(:substitutings).find(bi_id).substitutings.ids.each do |s_id|
@@ -20,16 +12,5 @@ class BaseDrinksBaseIngredient < ApplicationRecord
       base_drink_ids.concat(base_drink_ids_candidate.uniq)
     end
     base_drink_ids.group_by(&:itself).select{ |k, v| v.length >= params_base_ingredient_ids.length}.keys
-  end
-
-  def self.or_get_base_drink_ids_from_base_ingredient_ids params_base_ingredient_ids
-    base_drink_ids = params_base_ingredient_ids.each_with_object([]) do |bi_id, base_drink_ids|
-      base_drink_ids_candidate = self.where(base_ingredient_id: bi_id).group(:base_drink_id).having('count(base_drink_id)>=1').count.keys
-      BaseIngredient.includes(:substitutings).find(bi_id).substitutings.ids.each do |s_id|
-        base_drink_ids_candidate.concat self.where(base_ingredient_id: s_id).group(:base_drink_id).having('count(base_drink_id)>=1').count.keys
-      end
-      base_drink_ids.concat(base_drink_ids_candidate.uniq)
-    end
-    base_drink_ids.group_by(&:itself).keys
   end
 end

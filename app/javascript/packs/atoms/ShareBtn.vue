@@ -5,7 +5,7 @@
 </script>
 <style scoped>
 .share-btn{
-  font-family: "Roboto";
+  font-family: Roboto;
   font-style: normal;
   font-weight: normal;
   font-size: 24px;

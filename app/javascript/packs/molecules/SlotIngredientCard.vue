@@ -41,14 +41,14 @@ export default{
   margin-top: 10px;
 }
 .ingName{
-  font-family: "Roboto";
+  font-family: Roboto;
   font-style: normal;
   font-weight: bold;
   font-size: 19px;
   line-height: 21px;
 }
 .ingTotal{
-  font-family: "Roboto";
+  font-family: Roboto;
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
