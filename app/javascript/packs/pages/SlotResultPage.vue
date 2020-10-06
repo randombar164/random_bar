@@ -3,7 +3,6 @@
     <v-row>
       <v-col>
         <result></result>
-        <ingredients-list></ingredients-list>
     </v-col>
   </v-row>
 </v-container>
