@@ -175,6 +175,5 @@ export default{
   color: #2A5078;
 }
 .icon{
-
 }
 </style>
