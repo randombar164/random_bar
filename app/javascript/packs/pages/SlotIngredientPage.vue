@@ -62,6 +62,7 @@ export default{
         }
       });
       this.setRecipe();
+      this.$ga.event('click', 'button', "gacha_btn", 1) // ga の処理
       this.$router.push({ path:`/result/${this.drinkId}`, query: {IngName: this.name, IngId: this.id}});
       window.scrollTo(0,0);
     }
@@ -77,7 +78,7 @@ span{
   text-align: center;
 }
 .cockName{
-  font-family: Roboto;
+  font-family: "Roboto";
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
