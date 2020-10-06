@@ -27,7 +27,7 @@ span{
 }
 .concept{
   border-bottom:solid;
-  font-family: "Roboto";
+  font-family: Roboto;
   font-style: normal;
   font-weight: bold;
   font-size: 16px;
@@ -37,7 +37,7 @@ span{
 .letStart{
   text-align: center;
   padding-top: 30px;
-  font-family: "Roboto";
+  font-family: Roboto;
   font-style: normal;
   font-weight: bold;
   font-size: 16px;

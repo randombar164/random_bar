@@ -1,8 +1,9 @@
 <template>
   <div>
-    <top-img :gacha="gacha"></top-img>
+    <top-img :gacha="RandomGacha"></top-img>
     <v-container>
       <top-exp></top-exp>
+      <ingredients-list>a</ingredients-list>
     </v-container>
     <amazon-osusume />
   </div>
@@ -27,29 +28,22 @@ export default{
       'drinkId'
     ])
   },
-  created(){
-    this.getBaseIngList();
-  },
   methods: {
     ...mapActions('drinkData',[
       'getDrink',
-      'getBaseIngList',
       'setRecipe',
       'removeRecipe',
     ]),
-    // async RandomGacha(){
-    //   this.removeRecipe();
-    //   await this.getDrink({
-    //     filters:{
-    //       handling_store_ids: [1, 2, 3],
-    //     }
-    //   });
-    //   this.setRecipe();
-    //   this.$router.push({ path:`/result/${this.drinkId}`});
-    //   window.scrollTo(0,0);
-    // }
-    gacha(){
-      this.$router.push({path: '/register'});
+    async RandomGacha(){
+      this.removeRecipe();
+      await this.getDrink({
+        filters:{
+          handling_store_ids: [1],
+        }
+      });
+      this.setRecipe();
+      this.$router.push({ path:`/result/${this.drinkId}`});
+      window.scrollTo(0,0);
     }
   }
 };

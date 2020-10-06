@@ -35,20 +35,4 @@ class BaseIngredient < ApplicationRecord
     end
     return false
   end
-
-  def choose_concrete_ingredient(params_filters)
-    return self.concrete_ingredients.sample if params_filters[:base_ingredient_ids].include?(self.id)
-    self.substitutions.ids.each do |id| 
-      return BaseIngredient.find(id).concrete_ingredients.sample if params_filters[:base_ingredient_ids].include?(id)
-    end
-    ingredients = Array(self.concrete_ingredients)
-    self.substitutions.each do |substitution|
-      ingredients.concat(Array(substitution.concrete_ingredients))
-    end
-
-    ingredients.each do |i|
-      return i if (params_filters[:handling_store_ids] - i.handling_store_ids).length < params_filters[:handling_store_ids].length
-    end
-    return nil
-  end
 end

@@ -12,10 +12,10 @@ class BaseDrink < ApplicationRecord
   def self.get_random params_filters
     return BaseDrink.with_recipe.random if params_filters.nil?
 
-    # params_filters[:base_ingredient_ids].each do |bi_id|
-    #   base_ingredient = BaseIngredient.find(bi_id)
-    #   return nil unless base_ingredient.has_handling_store_ids(params_filters[:handling_store_ids])
-    # end
+    params_filters[:base_ingredient_ids].each do |bi_id|
+      base_ingredient = BaseIngredient.find(bi_id)
+      return nil unless base_ingredient.has_handling_store_ids(params_filters[:handling_store_ids])
+    end
 
     cookable_base_drink_ids = params_filters[:base_ingredient_ids].present? ? \
                               BaseDrinksBaseIngredient.get_base_drink_ids_from_base_ingredient_ids(params_filters[:base_ingredient_ids]) : \
@@ -45,7 +45,7 @@ class BaseDrink < ApplicationRecord
         substitutions_count = substitutions.count
         num = rand(substitutions_count + 1)
         num == substitutions_count ? \
-          concrete_ingredients << base_ingredient.find_random_concrete_ingredient : \
+          concrete_ingredients << bi.find_random_concrete_ingredient : \
           concrete_ingredients << substitutions[num].find_random_concrete_ingredient
       end and return concrete_ingredients
     end

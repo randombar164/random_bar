@@ -41,7 +41,7 @@ export default{
 </script>
 <style scoped>
 .gachaWith{
-  font-family: "Roboto";
+  font-family: Roboto;
   font-style: normal;
   font-weight: bold;
   border-bottom:solid;
