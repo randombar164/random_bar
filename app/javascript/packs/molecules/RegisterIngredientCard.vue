@@ -1,7 +1,7 @@
 <template>
   <v-card flat height="120px" class="ingCard">
     <div class="float-left mt-3 ml-3">
-      <v-img :src="imageUrl" height="90px"contain  width="90px"></v-img>
+      <v-img :src="imageUrl" height="90px" contain  width="90px"></v-img>
     </div>
     <div class="ingCard-info d-flex justify-space-between">
       <p class="ingName">{{ name }}</p>
@@ -21,7 +21,7 @@ export default{
 </script>
 <style scoped>
 .ingCard{
-  border: 1px solid #C4C4C4;
+  border: 1px solid;
   box-sizing: border-box;
   position: relative;
 }
