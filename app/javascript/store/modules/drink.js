@@ -107,6 +107,7 @@ export const drinkData = {
         commit('addDrinkId', {id: baseDrink.id});
       })
       .catch(err => {
+        console.error(err);
       })
     },
 
@@ -170,8 +171,6 @@ export const drinkData = {
         handlingStoreIds: state.handlingStoreIds,
         baseIngredientIds: state.baseIngredientIds
       }
-      console.log(recipe);
-      console.log(JSON.stringify(recipe));
       localStorage.setItem('recipe', JSON.stringify(recipe));
     },
 
@@ -190,6 +189,20 @@ export const drinkData = {
       recipe.handlingStoreIds.map((v) => commit('addHandlingStoreIds', { handlingStoreId: v }))
       recipe.baseIngredientIds.map((v) => commit('addBaseIngredientIds', { id: v }));
       commit('addDrinkId', { id: state.cocktailRecipe.id});
+    },
+
+    remainRegisteredIng({state}){
+      localStorage.setItem('registeredIng', JSON.stringify(state.registeredIngList));
+    },
+
+    getRegisteredIng({state, commit}){
+      if(state.registeredIngList.length > 0){
+        return;
+      };
+      const registeredIngList = JSON.parse(localStorage.getItem('registeredIng'));
+      registeredIngList?.map((v) => commit('addRegisteredIngList', { registeredIng: v }));
+      registeredIngList?.map((v) => console.log(v));
+
     },
 
     removeCocktailRecipe(){
