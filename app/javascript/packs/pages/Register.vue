@@ -7,17 +7,17 @@
     </v-col>
   </v-row>
   <v-row class="d-flex justify-end">
-  <v-btn  @click="overlay = !overlay" class="addBtn float-right mr-5 mt-3" color="#F5E9D3">
+  <v-btn  @click="dialog = !dialog" class="addBtn float-right mr-5 mt-5" color="#F5E9D3" height="47px">
     <v-icon large color="#FF6749">mdi-plus-circle</v-icon>
     <p class="addBtnText">追加登録する</p>
   </v-btn>
   </v-row>
   <v-row class="my-3">
     <v-col cols="12" class="ma-0 pa-0">
-    <v-checkbox class="select" @change="setStore(1)" label="コンビニの材料を含む"></v-checkbox>
+    <v-checkbox class="select" v-model="conbiniChecked" @change="setStore(1)" label="コンビニの材料を含む"></v-checkbox>
     </v-col>
     <v-col cols="12" class="ma-0 pa-0">
-    <v-checkbox  class="select" @change="setStore(3)" label="Amazonの材料を含む"></v-checkbox>
+    <v-checkbox  class="select" v-model="amazonChecked" @change="setStore(3)" label="Amazonの材料を含む"></v-checkbox>
     </v-col>
   </v-row>
   <v-row>
@@ -25,23 +25,34 @@
       <slot-btn :width="width" :msg="btnMsg" :gacha="gacha"></slot-btn>
     </v-col>
   </v-row>
-  <v-overlay :value="overlay">
+  <v-dialog
+    v-model="dialog"
+    class="dialog"
+    persistent>
+    <v-card>
     <v-row justify="end">
-    <v-icon class="icon mb-1" @click="overlay = !overlay" large>mdi-close</v-icon>
+    <v-icon class="icon my-1 mr-5" @click="dialog = !dialog" large>mdi-close</v-icon>
     </v-row>
-    <v-autocomplete
-      v-model="selectedItem"
-      :items="items"
-      item-text="name"
-      item-value="id"
-      :search-input.sync="search"
-      placeholder="材料名を入力してください"
-      hide-no-data
-      no-filter
-      return-object
-    ></v-autocomplete>
-    <v-btn class="mt-5" @click="appendIng">登録する</v-btn>
-  </v-overlay>
+    <v-row justify="center">
+    <v-col cols="10">
+      <v-autocomplete
+        v-model="selectedItem"
+        :items="items"
+        item-text="name"
+        item-value="id"
+        :search-input.sync="search"
+        placeholder="材料名を入力してください。"
+        hide-no-data
+        multiple
+        no-filter
+        chips
+        return-object
+      ></v-autocomplete>
+    </v-col>
+    </v-row>
+    <v-row justify="center"><v-btn class="my-5" @click="appendIng">登録する</v-btn></v-row>
+    </v-card>
+  </v-dialog>
   <v-row v-if="alert">
     <v-col cols="12" class="d-flex justify-center">
       <v-alert
@@ -70,12 +81,15 @@ export default{
   },
   data: function(){
     return{
-      overlay: false,
+      dialog: false,
       search: null,
       selectedItem: null,
       alert: false,
       loading: false,
+      conbiniChecked: true,
+      amazonChecked: true,
       items: [],
+      stores: [1, 3],
       width: "95%",
       btnMsg: "作れるカクテルを見つける"
     }
@@ -85,6 +99,7 @@ export default{
     this.removeRecipe();
     this.handlingStoreIds?.map((v) => this.deleteHandlingStoreId(v));
     this.baseIngredientIds?.map((v) => this.removeRegisteredIng(v));
+    this.getRegisteredIng();
   },
   computed:{
     ...mapState('drinkData',[
@@ -110,7 +125,9 @@ export default{
       'setHandlingStoreId',
       'deleteHandlingStoreId',
       'removeRecipe',
-      'removeRegisteredIng'
+      'removeRegisteredIng',
+      'getRegisteredIng',
+      'remainRegisteredIng'
     ]),
     querySelections (v) {
         this.loading = true
@@ -123,20 +140,21 @@ export default{
         }, 500)
       },
     setStore(id){
-      if(this.handlingStoreIds.includes(id)){
-        this.deleteHandlingStoreId(id);
+      if(this.stores.includes(id)){
+        this.stores = this.stores.filter(v => v !== id);
       }else{
-        this.setHandlingStoreId(id);
+        this.stores.push(id);
       };
     },
     appendIng() {
-      this.setRegisteredIng(this.selectedItem);
-      this.overlay = !this.overlay;
+      this.selectedItem.map((v) => this.setRegisteredIng(v));
+      this.dialog = !this.dialog;
     },
     gacha(){
+      this.stores.map(v => this.setHandlingStoreId(v));
       if(this.handlingStoreIds.length < 1){
-        this.alert = true;
-        return;
+          this.alert = true;
+          return;
       };
       this.getDrink({
         filters:{
@@ -144,6 +162,7 @@ export default{
           handling_store_ids: [ ...this.handlingStoreIds ]
         }
       });
+      this.remainRegisteredIng();
       this.setRecipe();
       this.$router.push({ path:`/result/${this.drinkId}`});
       window.scrollTo(0,0);
@@ -175,5 +194,8 @@ export default{
 }
 .icon{
 
+}
+.dialog{
+  height: 80%;
 }
 </style>
