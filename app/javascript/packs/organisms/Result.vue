@@ -50,7 +50,6 @@ export default{
   created(){
     if(this.baseIngredientIds.length < 1){
       this.getRecipe();
-      // console.log("called");
     };
   },
 
