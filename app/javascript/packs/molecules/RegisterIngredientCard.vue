@@ -16,7 +16,11 @@ export default{
     "name",
     "id",
     "deleteCard"
-  ]
+  ],
+  created(){
+    console.log(this.imageUrl);
+    console.log(typeof(this.imageUrl));
+  }
 }
 </script>
 <style scoped>
