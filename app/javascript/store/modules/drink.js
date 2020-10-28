@@ -9,7 +9,6 @@ const getImageTag = (ingredients) => {
   const amazonImage = ingredients[index].tag.match(regexp_url)[1];
   return amazonImage;
 };
-
 async function getUrl(id){
   let amazonImage;
   await axios
@@ -37,7 +36,7 @@ export const drinkData = {
     baseIngredientsList: null,
     registeredIngList: [],
     baseIngredientIds: [],
-    handlingStoreIds: []
+    handlingStoreIds: [1,3]
     // cockNum: null
   },
   getters: {
@@ -143,12 +142,12 @@ export const drinkData = {
     },
 
     setRegisteredIng({commit},obj){
-      const registerdIng = {
+      const registeredIng = {
         "id": obj.id,
         "name": obj.name,
-        "imageUrl": getImageTag(obj.concrete_ingredients)
+        "concrete_ingredients": obj.concrete_ingredients 
       }
-      commit('addRegisteredIngList', { registeredIng: registerdIng } );
+      commit('addRegisteredIngList', { registeredIng: registeredIng } );
       commit('addBaseIngredientIds', { id: obj.id });
     },
 
@@ -157,12 +156,9 @@ export const drinkData = {
       commit('removeBaseIngredientIds', { id: id });
     },
 
-    setHandlingStoreId({commit}, id){
-      commit('addHandlingStoreIds', {handlingStoreId: id} );
-    },
-
-    deleteHandlingStoreId({commit}, id){
-      commit('removeHandlingStoreIds', { handlingStoreId: id });
+    setHandlingStoreId({ state, commit}, id){
+      !state.handlingStoreIds.includes(id) ? commit('addHandlingStoreIds', {handlingStoreId: id} ) 
+      : commit('removeHandlingStoreIds', { handlingStoreId: id });
     },
 
     setRecipe({ state }){
@@ -214,6 +210,7 @@ export const drinkData = {
     },
     removeRecipe(){
       localStorage.removeItem('recipe');
+      localStorage.removeItem('registeredIng');
     }
   }
 }
