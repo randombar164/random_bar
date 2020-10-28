@@ -52,7 +52,6 @@ export default{
       this.getRecipe();
     };
   },
-
   methods: {
     ...mapActions('drinkData',[
       'getRecipe',
