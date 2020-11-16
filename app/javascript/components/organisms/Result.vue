@@ -51,6 +51,8 @@ export default{
   methods: {
     gachaMore(){
       this.cocktail = new Cocktail({baseIngredientIds: this.$route.query.baseIngredientIds.split(","), handlingStoreIds: this.$route.query.handlingStoreIds.split(",")});
+      this.$ga.event('click', 'button', "gacha_btn", 1) // ga の処理
+      this.$router.push({ path:`/result/${this.drinkId}`});
       window.scrollTo(0,0);
     },
     toRegister(){

@@ -113,6 +113,7 @@ export default{
           this.alert = true;
           return;
       };
+      this.$ga.event('click', 'button', "gacha_btn", 1) // ga の処理
       this.$router.push({ path:`/result?baseIngredientIds=${this.baseIngredientIds}&handlingStoreIds=${this.handlingStoreIds}`});
       window.scrollTo(0,0);
     }
