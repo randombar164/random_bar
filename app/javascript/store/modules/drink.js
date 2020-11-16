@@ -9,7 +9,6 @@ const getImageTag = (ingredients) => {
   const amazonImage = ingredients[index].tag.match(regexp_url)[1];
   return amazonImage;
 };
-
 async function getUrl(id){
   let amazonImage;
   await axios
@@ -37,7 +36,7 @@ export const drinkData = {
     baseIngredientsList: null,
     registeredIngList: [],
     baseIngredientIds: [],
-    handlingStoreIds: []
+    handlingStoreIds: [1,3]
     // cockNum: null
   },
   getters: {
@@ -107,6 +106,7 @@ export const drinkData = {
         commit('addDrinkId', {id: baseDrink.id});
       })
       .catch(err => {
+        console.error(err);
       })
     },
 
@@ -142,12 +142,12 @@ export const drinkData = {
     },
 
     setRegisteredIng({commit},obj){
-      const registerdIng = {
+      const registeredIng = {
         "id": obj.id,
         "name": obj.name,
-        "imageUrl": getImageTag(obj.concrete_ingredients)
+        "concrete_ingredients": obj.concrete_ingredients 
       }
-      commit('addRegisteredIngList', { registeredIng: registerdIng } );
+      commit('addRegisteredIngList', { registeredIng: registeredIng } );
       commit('addBaseIngredientIds', { id: obj.id });
     },
 
@@ -156,12 +156,9 @@ export const drinkData = {
       commit('removeBaseIngredientIds', { id: id });
     },
 
-    setHandlingStoreId({commit}, id){
-      commit('addHandlingStoreIds', {handlingStoreId: id} );
-    },
-
-    deleteHandlingStoreId({commit}, id){
-      commit('removeHandlingStoreIds', { handlingStoreId: id });
+    setHandlingStoreId({ state, commit}, id){
+      !state.handlingStoreIds.includes(id) ? commit('addHandlingStoreIds', {handlingStoreId: id} ) 
+      : commit('removeHandlingStoreIds', { handlingStoreId: id });
     },
 
     setRecipe({ state }){
@@ -170,8 +167,6 @@ export const drinkData = {
         handlingStoreIds: state.handlingStoreIds,
         baseIngredientIds: state.baseIngredientIds
       }
-      // console.log(recipe);
-      // console.log(JSON.stringify(recipe));
       localStorage.setItem('recipe', JSON.stringify(recipe));
     },
 
@@ -192,6 +187,20 @@ export const drinkData = {
       commit('addDrinkId', { id: state.cocktailRecipe.id});
     },
 
+    remainRegisteredIng({state}){
+      localStorage.setItem('registeredIng', JSON.stringify(state.registeredIngList));
+    },
+
+    getRegisteredIng({state, commit}){
+      if(state.registeredIngList.length > 0){
+        return;
+      };
+      const registeredIngList = JSON.parse(localStorage.getItem('registeredIng'));
+      registeredIngList?.map((v) => commit('addRegisteredIngList', { registeredIng: v }));
+      registeredIngList?.map((v) => console.log(v));
+
+    },
+
     removeCocktailRecipe(){
       const storageItem = JSON.parse(localStorage.getItem('recipe'));
       if(storageItem){
@@ -201,6 +210,7 @@ export const drinkData = {
     },
     removeRecipe(){
       localStorage.removeItem('recipe');
+      localStorage.removeItem('registeredIng');
     }
   }
 }

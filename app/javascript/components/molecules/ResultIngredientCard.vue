@@ -15,7 +15,7 @@
 </v-container>
 </template>
 <script>
-import AmazonBtn from "packs/atoms/AmazonBtn";
+import AmazonBtn from "components/atoms/AmazonBtn";
 
 export default{
   props:[
@@ -41,7 +41,6 @@ export default{
 .supportInfo{
   padding: 0;
   margin-bottom: 7px;
-  font-family: "Roboto";
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
@@ -49,7 +48,6 @@ export default{
 }
 .resultIngName{
   padding-top: 1.5px;
-  font-family: "Roboto";
   font-style: normal;
   font-weight: normal;
   font-size: 1em;

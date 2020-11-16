@@ -21,7 +21,6 @@ export default{
 <style scoped>
 .amazonBtn{
   border-radius: 6px;
-  font-family: "Roboto";
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
