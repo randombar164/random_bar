@@ -60,6 +60,10 @@ export default{
     toRegister(){
       this.$router.push({path: '/register'})
     }
+  },
+  created(){
+    localStorage.removeItem("recipe");
+    localStorage.removeItem("registeredIng");
   }
 }
 </script>
