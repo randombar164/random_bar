@@ -15,8 +15,8 @@
 </v-container>
 </template>
 <script>
-import temporaryIng from "packs/temporaryIng.json";
-import AmazonBtn from "packs/atoms/AmazonBtn";
+import temporaryIng from "components/temporaryIng.json";
+import AmazonBtn from "components/atoms/AmazonBtn";
 
 export default{
   components:{
@@ -36,7 +36,6 @@ export default{
   margin-top: 15px;
 }
 .osusume{
-  font-family: Roboto;
   font-style: normal;
   font-weight: bold;
   border-bottom:solid;
@@ -46,7 +45,6 @@ export default{
   margin-bottom: 0;
 }
 .ingName{
-  font-family: Roboto;
   font-style: normal;
   font-weight: bold;
   font-size: 19px;

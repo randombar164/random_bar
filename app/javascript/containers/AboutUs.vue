@@ -45,8 +45,8 @@
   </v-container>
 </template>
 <script>
-import TermsOfService from "packs/atoms/TermsOfService";
-import PrivacyPolicy from "packs/atoms/PrivacyPolicy";
+import TermsOfService from "components/atoms/TermsOfService";
+import PrivacyPolicy from "components/atoms/PrivacyPolicy";
 
 export default{
   components:{
@@ -57,14 +57,12 @@ export default{
 </script>
 <style scoped>
 .mainTitle{
-  font-family: Roboto;
   font-style: normal;
   font-weight: normal;
   font-size: 28px;
   line-height: 33px;
 }
 .subTitle{
-  font-family: Roboto;
   font-style: normal;
   font-weight: bold;
   border-bottom:solid;
