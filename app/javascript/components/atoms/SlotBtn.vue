@@ -14,7 +14,6 @@ export default{
 #ingBtn{
   border-radius: 6px;
   background-color: #FF6749;
-  font-family: Roboto;
   font-style: normal;
   font-weight: normal;
   font-size: 24px;

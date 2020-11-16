@@ -18,8 +18,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VueRouter from 'vue-router';
-import VueAnalytics from 'vue-analytics'
-import vuetify from '../plugins/vuetify'
+import VueAnalytics from 'vue-analytics';
+import vuetify from '../plugins/vuetify';
 // import store from 'store';
 import router from '../routes';
 import App from '../app';
