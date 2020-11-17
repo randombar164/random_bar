@@ -47,7 +47,6 @@ export default{
     ]),
     cocktailName(){return this.cocktail?.name},
     cocktailIngredients(){return this.cocktail?.ingredients}
-  },
   methods: {
     gachaMore(){
       this.cocktail = new Cocktail({baseIngredientIds: this.$route.query.baseIngredientIds.split(","), handlingStoreIds: this.$route.query.handlingStoreIds.split(",")});
