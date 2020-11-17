@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import HeaderComponent from './packs/organisms/header';
-import FooterComponent from './packs/organisms/footer';
+import HeaderComponent from './components/organisms/header';
+import FooterComponent from './components/organisms/footer';
 
 export default {
   components: {
@@ -32,5 +32,9 @@ export default {
 }
 #app{
   background-color: #FCFAF1;
+}
+*{
+  font-family: "Roboto";
+
 }
 </style>

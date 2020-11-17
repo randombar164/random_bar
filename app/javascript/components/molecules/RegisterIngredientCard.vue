@@ -29,7 +29,6 @@ export default{
   position: absolute;
   font-size: 1em;
   float: left;
-  font-family: "Roboto";
   font-weight: bold;
   margin: 0;
   margin-left: 10px;

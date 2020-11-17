@@ -8,12 +8,10 @@
 </v-container>
 </template>
 <script>
-import Result from "packs/organisms/Result";
-import IngredientsList from "packs/organisms/IngredientsList";
+import Result from "components/organisms/Result";
 export default{
   components:{
-    Result,
-    IngredientsList
+    Result
   }
 }
 </script>

@@ -16,7 +16,6 @@ export default{
   color: #FF6749;
   border-radius: 50%;
   border: solid 2px #FF6749;
-  font-family: "Roboto";
   font-style: normal;
   font-weight: bold;
   font-size: 75px;

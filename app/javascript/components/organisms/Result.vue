@@ -4,10 +4,9 @@
       <v-btn @click="toRegister" text color="#FF6749">< 材料登録に戻る</v-btn>
     </v-row>
     <v-row>
-      <v-col cols="12" v-if="name"><span>{{ name }}</span>を使ったカクテルガチャ</v-col>
-      <v-col cols="12" class="cocktailName">{{ cocktailRecipe.name }}</v-col>
+      <v-col cols="12" class="cocktailName">{{ cocktailName }}</v-col>
       <v-col cols="12" class="ings">材料</v-col>
-      <v-col cols="12" class="results" v-for="recipe in cocktailRecipe.ingredients" :key=cocktailRecipe.ingredients.id>
+      <v-col cols="12" class="results" v-for="recipe in cocktailIngredients" :key=recipe.id>
         <result-ingredient-card :amazonUrl="recipe.amazonUrl" :imageUrl="recipe.imageUrl" :name="recipe.name" :amount="recipe.amount" :unit="recipe.unit" :baseIngName="recipe.baseIngredientName" :additionalExp="recipe.additionalExp"></result-ingredient-card>
       </v-col>
       <v-col cols="12" class="d-flex justify-center mt-5">
@@ -20,9 +19,10 @@
   </v-container>
 </template>
 <script>
-import ResultIngredientCard from "packs/molecules/ResultIngredientCard";
-import SlotBtn from "packs/atoms/SlotBtn";
-import ShareBtn from "packs/atoms/ShareBtn";
+import ResultIngredientCard from "components/molecules/ResultIngredientCard";
+import SlotBtn from "components/atoms/SlotBtn";
+import ShareBtn from "components/atoms/ShareBtn";
+import Cocktail from "models/cocktail"
 import { mapState, mapActions } from 'vuex';
 
 export default{
@@ -33,43 +33,24 @@ export default{
   },
   data: function(){
     return{
-      name: null,
-      id: null,
+      cocktail: new Cocktail({baseIngredientIds: this.$route.query.baseIngredientIds.split(","), handlingStoreIds: this.$route.query.handlingStoreIds.split(",")}),
       btnMsg: "もう１回まわす",
       width: "100%",
     }
   },
   computed: {
-    ...mapState('drinkData',[
-      'cocktailRecipe',
-      'drinkId',
-      'baseIngredientIds',
-      'handlingStoreIds'
-    ])
-  },
-  created(){
-    if(this.baseIngredientIds.length < 1){
-      this.getRecipe();
-    };
-  },
-  methods: {
-    ...mapActions('drinkData',[
-      'getRecipe',
-      'getDrink',
-      'setCocktailRecipe',
-      'removeCocktailRecipe',
+    ...mapState('registerIngredients',[
+      'baseIngredientIds'
     ]),
-    async gachaMore(){
-      this.removeCocktailRecipe();
-      await this.getDrink({
-          filters:{
-            base_ingredient_ids:[ ...this.baseIngredientIds ],
-            handling_store_ids: [ ...this.handlingStoreIds ]
-          }
-        })
-      this.setCocktailRecipe();
+    ...mapState('handlingStore',[
+      'handlingStoreIds'
+    ]),
+    cocktailName(){return this.cocktail?.name},
+    cocktailIngredients(){return this.cocktail?.ingredients}
+  methods: {
+    gachaMore(){
+      this.cocktail = new Cocktail({baseIngredientIds: this.$route.query.baseIngredientIds.split(","), handlingStoreIds: this.$route.query.handlingStoreIds.split(",")});
       this.$ga.event('click', 'button', "gacha_btn", 1) // ga の処理
-      this.$router.push({ path:`/result/${this.drinkId}`});
       window.scrollTo(0,0);
     },
     toRegister(){
