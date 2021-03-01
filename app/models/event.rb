@@ -6,4 +6,7 @@ class Event < ApplicationRecord
   has_many :base_ingredients, through: :events_base_ingredients
   accepts_nested_attributes_for :events_base_ingredients, allow_destroy: true
 
+  def cookable_base_drinks 
+    return BaseDrink.base_drinks_from_base_ingredients(self.base_ingredient_ids)
+  end
 end
