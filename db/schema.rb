@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_08_132058) do
+ActiveRecord::Schema.define(version: 2021_03_01_052135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,22 @@ ActiveRecord::Schema.define(version: 2020_09_08_132058) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "events", force: :cascade do |t|
+    t.string "uuid"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "events_base_ingredients", force: :cascade do |t|
+    t.bigint "event_id"
+    t.bigint "base_ingredient_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["base_ingredient_id"], name: "event_base_ingredient_index_name_2"
+    t.index ["event_id"], name: "event_base_ingredient_index_name_1"
+  end
+
   create_table "glass_types", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -113,5 +129,7 @@ ActiveRecord::Schema.define(version: 2020_09_08_132058) do
   add_foreign_key "concrete_ingredients", "base_ingredients"
   add_foreign_key "concrete_ingredients_handling_stores", "concrete_ingredients"
   add_foreign_key "concrete_ingredients_handling_stores", "handling_stores"
+  add_foreign_key "events_base_ingredients", "base_ingredients"
+  add_foreign_key "events_base_ingredients", "events"
   add_foreign_key "unit_conversions", "units"
 end

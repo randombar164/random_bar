@@ -1,0 +1,2 @@
+class EventsBaseIngredient < ApplicationRecord
+end
