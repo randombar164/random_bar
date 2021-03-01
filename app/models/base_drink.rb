@@ -82,6 +82,7 @@ class BaseDrink < ApplicationRecord
 
   # base_drinks カウント用
   def self.base_drinks_from_base_ingredients(ids)
+    ids_with_substitutings = ids.each_with_object([]) { |id, array| array.concat(BaseIngredient.find(id).substituting_ids) }
     base_drinks = []
     BaseDrink.all.includes(:base_drinks_base_ingredients).each do |base_drink|
       base_drinks.push(base_drink) if base_drink.check_enough_ingredients?(ids)
