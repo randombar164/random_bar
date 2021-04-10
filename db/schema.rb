@@ -80,6 +80,8 @@ ActiveRecord::Schema.define(version: 2021_03_01_052135) do
   create_table "events_base_ingredients", force: :cascade do |t|
     t.bigint "event_id"
     t.bigint "base_ingredient_id"
+    t.string "assigned_user_name"
+    t.boolean "is_assigned", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["base_ingredient_id"], name: "event_base_ingredient_index_name_2"

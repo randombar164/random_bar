@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       post 'events' => 'events#create'
       get 'events/:uuid' => 'events#show'
       patch 'events/:uuid' => 'events#update'
+      patch 'events/:uuid/events_base_ingredients/:base_ingredient_id' => 'events_base_ingredients#update'
     end
   end
 end
